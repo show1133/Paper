@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" data-theme="qing">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>資訊管理課程－科技接受度研究</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500&family=Noto+Serif+TC:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff; --surface:#f3f6f6; --ink:#15202b; --soft:#4b5866;
+    --faint:#7e8894; --rule:#dde2e3; --accent:#1f5f55; --accent-soft:#dde9e6;
+    --head-bg:#15202b; --head-ink:#eef2f3;
+  }
+  html[data-theme="lan"]{
+    --bg:#ffffff; --surface:#f0f3f9; --ink:#141b2b; --soft:#4a5468;
+    --faint:#78839a; --rule:#dbe1ec; --accent:#2b4a8b; --accent-soft:#dde4f2;
+    --head-bg:#141b2b; --head-ink:#eceff6;
+  }
+  html[data-theme="zhe"]{
+    --bg:#fffdfc; --surface:#f7f1ef; --ink:#241a17; --soft:#5e4d47;
+    --faint:#8c7a73; --rule:#e6dbd6; --accent:#8c3a2e; --accent-soft:#f2e0dc;
+    --head-bg:#2c1c18; --head-ink:#f6ece9;
+  }
+  html[data-theme="ye"]{
+    --bg:#11151a; --surface:#1a2027; --ink:#e4e9ef; --soft:#9aa6b2;
+    --faint:#7a8894; --rule:#2a323c; --accent:#5fb7a3; --accent-soft:#1e3a35;
+    --head-bg:#0b0e12; --head-ink:#e4e9ef;
+  }
+
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Noto Sans TC",system-ui,"Microsoft JhengHei",sans-serif;
+    font-size:15px; line-height:1.75;
+    display:flex; flex-direction:column; overflow:hidden;
+    transition:background .25s,color .25s;
+  }
+
+  /* ── 上框架 ───────────────────────────── */
+  header{
+    flex:none; background:var(--head-bg); color:var(--head-ink);
+    padding:16px 28px; display:flex; align-items:center; gap:24px; flex-wrap:wrap;
+    transition:background .25s;
+  }
+  .brand h1{
+    font-family:"Noto Serif TC",serif; font-weight:600; font-size:1.3rem;
+    margin:0; letter-spacing:.03em;
+  }
+  .brand p{margin:2px 0 0; font-size:.78rem; opacity:.65}
+  .palette{margin-left:auto; display:flex; align-items:center; gap:10px}
+  .palette .label{font-size:.78rem; opacity:.65}
+  .swatch{
+    width:26px; height:26px; border-radius:50%; cursor:pointer; padding:0;
+    border:2px solid transparent; outline-offset:3px;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.25);
+  }
+  .swatch[aria-pressed="true"]{border-color:var(--head-ink)}
+  .sw-qing{background:#1f5f55}
+  .sw-lan{background:#2b4a8b}
+  .sw-zhe{background:#8c3a2e}
+  .sw-ye{background:linear-gradient(135deg,#11151a 50%,#5fb7a3 50%)}
+
+  /* ── 下方兩框架 ───────────────────────── */
+  .body{flex:1; display:flex; min-height:0}
+
+  nav{
+    flex:none; width:252px; background:var(--surface);
+    border-right:1px solid var(--rule); overflow-y:auto; padding:18px 0 32px;
+    transition:background .25s;
+  }
+  nav h2{
+    font-size:.74rem; font-weight:500; color:var(--faint);
+    margin:0 0 10px; padding:0 20px;
+  }
+  nav button{
+    display:block; width:100%; text-align:left; background:none; border:0;
+    border-left:3px solid transparent; padding:11px 20px; cursor:pointer;
+    color:var(--ink); font-family:inherit; font-size:.93rem; line-height:1.5;
+  }
+  nav button:hover{background:var(--accent-soft)}
+  nav button[aria-current="true"]{
+    border-left-color:var(--accent); background:var(--accent-soft);
+    font-weight:500; color:var(--accent);
+  }
+  nav button .idx{
+    font-family:"Noto Serif TC",serif; color:var(--faint);
+    margin-right:9px; font-size:.9rem;
+  }
+  nav button[aria-current="true"] .idx{color:var(--accent)}
+  nav button .en{display:block; font-size:.72rem; color:var(--faint); margin-left:26px}
+
+  main{flex:1; overflow-y:auto; padding:30px 36px 72px; min-width:0}
+  .sec-head{display:flex; align-items:baseline; gap:12px; border-bottom:1px solid var(--ink); padding-bottom:8px}
+  .sec-head h2{font-family:"Noto Serif TC",serif; font-weight:600; font-size:1.35rem; margin:0}
+  .sec-head .en{font-size:.78rem; color:var(--faint); margin-left:auto}
+  .lede{color:var(--soft); font-size:.93rem; margin:16px 0 22px; max-width:64ch}
+
+  .table-scroll{overflow-x:auto; margin-bottom:30px}
+  table{border-collapse:collapse; width:100%; min-width:820px; font-size:.85rem}
+  th{
+    text-align:left; font-weight:500; color:var(--soft); white-space:nowrap;
+    border-bottom:2px solid var(--ink); padding:8px 10px;
+  }
+  td{border-bottom:1px solid var(--rule); padding:10px; vertical-align:top}
+  td.n{color:var(--faint); text-align:right; width:2.4em}
+  td.model{font-weight:500; min-width:9em}
+  td.model small{display:block; font-weight:400; color:var(--faint); font-size:.88em}
+  td.src{color:var(--soft); min-width:13em}
+  td.yr{white-space:nowrap}
+  td.c{white-space:nowrap; text-align:right; font-variant-numeric:tabular-nums}
+  .bar{display:block; height:3px; background:var(--accent); opacity:.5; margin-top:4px; margin-left:auto}
+  td a{color:var(--accent); text-decoration:none; border-bottom:1px solid var(--accent-soft); word-break:break-all}
+  td a:hover{border-bottom-color:var(--accent)}
+
+  figure{margin:0}
+  .diagram{
+    background:var(--surface); border:1px solid var(--rule);
+    padding:26px 14px; text-align:center; overflow-x:auto; min-height:180px;
+    display:flex; align-items:center; justify-content:center;
+    transition:background .25s;
+  }
+  .diagram svg{max-width:100%; height:auto}
+  .loading{color:var(--faint); font-size:.85rem}
+  figcaption{font-size:.82rem; color:var(--faint); padding-top:10px}
+  details{margin-top:10px; font-size:.82rem}
+  summary{cursor:pointer; color:var(--accent); width:max-content}
+  details pre{
+    background:var(--bg); border:1px solid var(--rule); padding:14px;
+    overflow-x:auto; font-size:.78rem; line-height:1.6; color:var(--ink);
+    font-family:ui-monospace,"SFMono-Regular",Menlo,monospace;
+  }
+  .foot-note{margin-top:30px; padding-top:16px; border-top:1px solid var(--rule);
+    font-size:.82rem; color:var(--faint); max-width:64ch}
+
+  @media (max-width:860px){
+    body{overflow:auto}
+    .body{flex-direction:column}
+    nav{width:100%; border-right:0; border-bottom:1px solid var(--rule);
+      display:flex; overflow-x:auto; padding:0}
+    nav h2{display:none}
+    nav button{width:auto; white-space:nowrap; border-left:0; border-bottom:3px solid transparent}
+    nav button[aria-current="true"]{border-left:0; border-bottom-color:var(--accent)}
+    nav button .en{display:none}
+    main{padding:22px 18px 56px}
+    header{padding:14px 18px}
+    .palette{width:100%; margin-left:0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <h1>資訊管理課程－科技接受度研究</h1>
+    <p>六大面向理論模型彙編．依 Google Scholar 約略引用數排序</p>
+  </div>
+  <div class="palette">
+    <span class="label">網頁色系</span>
+    <button class="swatch sw-qing" data-theme="qing" aria-pressed="true" aria-label="青瓷"  title="青瓷"></button>
+    <button class="swatch sw-lan"  data-theme="lan"  aria-pressed="false" aria-label="墨藍" title="墨藍"></button>
+    <button class="swatch sw-zhe"  data-theme="zhe"  aria-pressed="false" aria-label="赭紅" title="赭紅"></button>
+    <button class="swatch sw-ye"   data-theme="ye"   aria-pressed="false" aria-label="夜讀" title="夜讀"></button>
+  </div>
+</header>
+
+<div class="body">
+  <nav id="nav" aria-label="研究面向"><h2>研究面向</h2></nav>
+  <main id="main" tabindex="-1"></main>
+</div>
+
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+
+const THEMES = {
+  qing:{a:['#dde9e6','#1f5f55','#12302b'], b:['#ffffff','#1f5f55','#12302b'], c:['#e7e1d6','#8a6a4a','#3d2c1c'], line:'#4b5866', ink:'#15202b', dark:false},
+  lan :{a:['#dde4f2','#2b4a8b','#15223f'], b:['#ffffff','#2b4a8b','#15223f'], c:['#f1e3e0','#9c5548','#3f201a'], line:'#4a5468', ink:'#141b2b', dark:false},
+  zhe :{a:['#f2e0dc','#8c3a2e','#3d1b14'], b:['#fffdfc','#8c3a2e','#3d1b14'], c:['#e3e6dc','#5f6b4a','#26301c'], line:'#5e4d47', ink:'#241a17', dark:false},
+  ye  :{a:['#1e3a35','#5fb7a3','#cfe8e1'], b:['#1a2027','#5fb7a3','#cfe8e1'], c:['#3a3328','#c4a06a','#efe2cc'], line:'#9aa6b2', ink:'#e4e9ef', dark:true}
+};
+
+const CLASSDEF = `
+  classDef a fill:__AF__,stroke:__AS__,color:__AT__,stroke-width:1px;
+  classDef b fill:__BF__,stroke:__BS__,color:__BT__,stroke-width:1px;
+  classDef c fill:__CF__,stroke:__CS__,color:__CT__,stroke-width:1px;`;
+
+const SECTIONS = [
+{
+  id:'s1', idx:'一', name:'接受度意圖', en:'Behavioral Intention',
+  lede:'探討使用者在實際使用之前，形成使用意願的認知與社會心理歷程。模型家族以 TRA → TPB → TAM → UTAUT 的演進最為清晰，是科技接受度研究中理論密度最高的一塊。',
+  rows:[
+    ['計畫行為理論','TPB','The theory of planned behavior','Organizational Behavior and Human Decision Processes, 50(2), 179–211（Ajzen）','1991',165000,'https://doi.org/10.1016/0749-5978(91)90020-T'],
+    ['科技接受模式','TAM','Perceived Usefulness, Perceived Ease of Use, and User Acceptance of Information Technology','MIS Quarterly, 13(3), 319–340（Davis）','1989',95000,'https://doi.org/10.2307/249008'],
+    ['理性行為理論','TRA','Belief, Attitude, Intention, and Behavior','Addison-Wesley（Fishbein & Ajzen）','1975',65000,'https://people.umass.edu/aizen/f&a1975.html'],
+    ['整合性科技接受模式','UTAUT','User Acceptance of Information Technology: Toward a Unified View','MIS Quarterly, 27(3), 425–478（Venkatesh et al.）','2003',55000,'https://doi.org/10.2307/30036540'],
+    ['TAM 雙理論比較版','TAM / TRA','User Acceptance of Computer Technology: A Comparison of Two Theoretical Models','Management Science, 35(8), 982–1003（Davis, Bagozzi & Warshaw）','1989',30000,'https://doi.org/10.1287/mnsc.35.8.982'],
+    ['科技接受模式二代','TAM2','A Theoretical Extension of the Technology Acceptance Model','Management Science, 46(2), 186–204（Venkatesh & Davis）','2000',25000,'https://doi.org/10.1287/mnsc.46.2.186.11926'],
+    ['延伸整合模式','UTAUT2','Consumer Acceptance and Use of Information Technology','MIS Quarterly, 36(1), 157–178（Venkatesh, Thong & Xu）','2012',20000,'https://doi.org/10.2307/41410412'],
+    ['分解式計畫行為理論','DTPB','Understanding Information Technology Usage: A Test of Competing Models','Information Systems Research, 6(2), 144–176（Taylor & Todd）','1995',9500,'https://doi.org/10.1287/isre.6.2.144'],
+    ['科技接受模式三代','TAM3','Technology Acceptance Model 3 and a Research Agenda on Interventions','Decision Sciences, 39(2), 273–315（Venkatesh & Bala）','2008',8000,'https://doi.org/10.1111/j.1540-5915.2008.00192.x'],
+    ['動機模式','MM','Extrinsic and Intrinsic Motivation to Use Computers in the Workplace','Journal of Applied Social Psychology, 22(14), 1111–1132（Davis, Bagozzi & Warshaw）','1992',5000,'https://doi.org/10.1111/j.1559-1816.1992.tb00945.x']
+  ],
+  caption:'圖 1　UTAUT 整合性科技接受模式（Venkatesh et al., 2003）',
+  diagram:`flowchart LR
+  PE["績效期望<br/>Performance expectancy"] --> BI
+  EE["努力期望<br/>Effort expectancy"] --> BI
+  SI["社會影響<br/>Social influence"] --> BI
+  BI["行為意圖<br/>Behavioral intention"] --> UB["使用行為<br/>Use behavior"]
+  FC["促成條件<br/>Facilitating conditions"] --> UB
+  MOD["調節變數<br/>性別、年齡、經驗、自願性"] -.-> BI
+  MOD -.-> UB
+  class PE,EE,SI,FC a
+  class MOD b
+  class BI,UB c`
+},
+{
+  id:'s2', idx:'二', name:'接受度行為', en:'Adoption & Use Behavior',
+  lede:'關注從意圖到實際使用的落差，以及創新屬性、任務特性與組織脈絡如何促成真正的採用。此面向的研究多半需要行為軌跡或系統日誌等客觀資料佐證。',
+  rows:[
+    ['創新擴散理論','DOI','Diffusion of Innovations (5th ed.)','Free Press（Rogers）','2003',140000,'https://www.simonandschuster.com/books/Diffusion-of-Innovations-5th-Edition/Everett-M-Rogers/9780743222099'],
+    ['社會認知理論','SCT','Social Foundations of Thought and Action','Prentice-Hall（Bandura）','1986',60000,'https://psycnet.apa.org/record/1985-98423-000'],
+    ['整合性科技接受模式','UTAUT','User Acceptance of IT: Toward a Unified View','MIS Quarterly, 27(3), 425–478','2003',55000,'https://doi.org/10.2307/30036540'],
+    ['任務科技配適度','TTF','Task-Technology Fit and Individual Performance','MIS Quarterly, 19(2), 213–236（Goodhue & Thompson）','1995',10000,'https://doi.org/10.2307/249689'],
+    ['創新知覺屬性','PCI','Development of an Instrument to Measure the Perceptions of Adopting an IT Innovation','Information Systems Research, 2(3), 192–222（Moore & Benbasat）','1991',9500,'https://doi.org/10.1287/isre.2.3.192'],
+    ['科技—組織—環境架構','TOE','The Processes of Technological Innovation','Lexington Books（Tornatzky & Fleischer）','1990',9000,'https://scholar.google.com/scholar?q=Tornatzky+Fleischer+Processes+of+Technological+Innovation+1990'],
+    ['電腦自我效能','CSE','Computer Self-Efficacy: Development of a Measure and Initial Test','MIS Quarterly, 19(2), 189–211（Compeau & Higgins）','1995',8000,'https://doi.org/10.2307/249688'],
+    ['人際行為理論','TIB','Interpersonal Behavior','Brooks/Cole（Triandis）','1977',7000,'https://scholar.google.com/scholar?q=Triandis+Interpersonal+Behavior+1977'],
+    ['科技準備度','TRI','Technology Readiness Index (TRI)','Journal of Service Research, 2(4), 307–320（Parasuraman）','2000',6500,'https://doi.org/10.1177/109467050024001'],
+    ['個人電腦使用模式','MPCU','Personal Computing: Toward a Conceptual Model of Utilization','MIS Quarterly, 15(1), 125–143（Thompson, Higgins & Howell）','1991',5000,'https://doi.org/10.2307/249443']
+  ],
+  caption:'圖 2　創新決策過程與創新屬性（Rogers, 2003）',
+  diagram:`flowchart LR
+  K["知曉<br/>Knowledge"] --> P["說服<br/>Persuasion"]
+  P --> D["決策<br/>Decision"]
+  D --> I["實行<br/>Implementation"]
+  I --> C["確認<br/>Confirmation"]
+  ATTR["創新屬性<br/>相對優勢、相容性、複雜性<br/>可試驗性、可觀察性"] --> P
+  C -.->|"中止或拒絕"| D
+  class K,P,D a
+  class ATTR b
+  class I,C c`
+},
+{
+  id:'s3', idx:'三', name:'滿意度', en:'Satisfaction',
+  lede:'以期望與實際績效的比較為核心，涵蓋服務品質、知覺價值與系統成功等衡量取向。滿意度是連接「採用」與「持續使用」的中介樞紐，問卷研究中最常被設為中介變數。',
+  rows:[
+    ['期望—失驗理論','ECT / EDT','A Cognitive Model of the Antecedents and Consequences of Satisfaction Decisions','Journal of Marketing Research, 17(4), 460–469（Oliver）','1980',30000,'https://doi.org/10.1177/002224378001700405'],
+    ['服務品質模式','SERVQUAL','SERVQUAL: A Multiple-Item Scale for Measuring Consumer Perceptions of Service Quality','Journal of Retailing, 64(1), 12–40（Parasuraman, Zeithaml & Berry）','1988',28000,'https://scholar.google.com/scholar?q=SERVQUAL+multiple-item+scale+Parasuraman+1988'],
+    ['知覺價值模式','Perceived Value','Consumer Perceptions of Price, Quality, and Value: A Means-End Model','Journal of Marketing, 52(3), 2–22（Zeithaml）','1988',25000,'https://doi.org/10.1177/002224298805200302'],
+    ['資訊系統成功模式','IS Success','The DeLone and McLean Model of IS Success: A Ten-Year Update','Journal of MIS, 19(4), 9–30（DeLone & McLean）','2003',24000,'https://doi.org/10.1080/07421222.2003.11045748'],
+    ['滿意度行為觀點','Satisfaction','Satisfaction: A Behavioral Perspective on the Consumer','Routledge（Oliver）','1997',16000,'https://scholar.google.com/scholar?q=Oliver+Satisfaction+A+Behavioral+Perspective+on+the+Consumer'],
+    ['美國顧客滿意度指數','ACSI','The American Customer Satisfaction Index: Nature, Purpose, and Findings','Journal of Marketing, 60(4), 7–18（Fornell et al.）','1996',9000,'https://doi.org/10.1177/002224299606000403'],
+    ['電子服務品質','E-S-QUAL','E-S-QUAL: A Multiple-Item Scale for Assessing Electronic Service Quality','Journal of Service Research, 7(3), 213–233（Parasuraman et al.）','2005',7500,'https://doi.org/10.1177/1094670504271156'],
+    ['二因子理論','Two-Factor','The Motivation to Work；One More Time: How Do You Motivate Employees?','Wiley；Harvard Business Review（Herzberg et al.）','1959',7000,'https://scholar.google.com/scholar?q=Herzberg+The+Motivation+to+Work+1959'],
+    ['終端使用者滿意度','EUCS','The Measurement of End-User Computing Satisfaction','MIS Quarterly, 12(2), 259–274（Doll & Torkzadeh）','1988',5500,'https://doi.org/10.2307/248851'],
+    ['魅力品質（二維品質）','Kano Model','Attractive Quality and Must-Be Quality','Journal of the Japanese Society for Quality Control, 14(2), 39–48（狩野紀昭等）','1984',5000,'https://scholar.google.com/scholar?q=Kano+attractive+quality+must-be+quality+1984']
+  ],
+  caption:'圖 3　期望—失驗理論（Oliver, 1980）；虛線為直接效果路徑',
+  diagram:`flowchart LR
+  E["事前期望<br/>Expectation"] --> DC["確認／失驗<br/>Disconfirmation"]
+  PF["知覺績效<br/>Perceived performance"] --> DC
+  DC --> SAT["滿意度<br/>Satisfaction"]
+  E -.-> SAT
+  PF -.-> SAT
+  SAT --> RI["再使用意圖<br/>Repurchase intention"]
+  class E,PF a
+  class DC b
+  class SAT,RI c`
+},
+{
+  id:'s4', idx:'四', name:'持續使用', en:'Continuance',
+  lede:'處理採用之後的留存問題。核心命題是：初次接受的決定因素未必是持續使用的決定因素；習慣、轉換成本與關係品質在此階段取得主導地位。',
+  rows:[
+    ['承諾—信任理論','Commitment-Trust','The Commitment-Trust Theory of Relationship Marketing','Journal of Marketing, 58(3), 20–38（Morgan & Hunt）','1994',30000,'https://doi.org/10.1177/002224299405800302'],
+    ['資訊系統成功模式','IS Success','The DeLone and McLean Model of IS Success: A Ten-Year Update','Journal of MIS, 19(4), 9–30','2003',24000,'https://doi.org/10.1080/07421222.2003.11045748'],
+    ['延伸整合模式（含習慣）','UTAUT2','Consumer Acceptance and Use of Information Technology','MIS Quarterly, 36(1), 157–178','2012',20000,'https://doi.org/10.2307/41410412'],
+    ['期望確認模式','ECM-IS','Understanding Information Systems Continuance: An Expectation-Confirmation Model','MIS Quarterly, 25(3), 351–370（Bhattacherjee）','2001',13000,'https://doi.org/10.2307/3250921'],
+    ['心流理論（線上情境）','Flow','Marketing in Hypermedia Computer-Mediated Environments','Journal of Marketing, 60(3), 50–68（Hoffman & Novak）','1996',9500,'https://doi.org/10.1177/002224299606000304'],
+    ['習慣—持續使用模式','Habit','How Habit Limits the Predictive Power of Intention: The Case of IS Continuance','MIS Quarterly, 31(4), 705–737（Limayem, Hirt & Cheung）','2007',4500,'https://doi.org/10.2307/25148817'],
+    ['推—拉—繫泊模式','PPM','Migrating to New Service Providers: Toward a Unifying Framework of Switching Behaviors','Journal of the Academy of Marketing Science, 33(1), 96–115（Bansal et al.）','2005',3500,'https://doi.org/10.1177/0092070304267928'],
+    ['現狀偏誤／使用者抗拒','Status Quo Bias','Investigating User Resistance to Information Systems Implementation','MIS Quarterly, 33(3), 567–582（Kim & Kankanhalli）','2009',2800,'https://doi.org/10.2307/20650309'],
+    ['擴充 ECM（整合 TAM）','Extended ECM','Understanding Continued Information Technology Usage Behavior','Decision Support Systems, 42(3), 1819–1834（Hong, Thong & Tam）','2006',2000,'https://doi.org/10.1016/j.dss.2006.03.009'],
+    ['兩階段持續使用模式','Two-Stage ECM','Information Technology Continuance: A Theoretic Extension and Empirical Test','Journal of Computer Information Systems 等（Bhattacherjee 等）','2008',1800,'https://scholar.google.com/scholar?q=Bhattacherjee+information+technology+continuance+two-stage+model']
+  ],
+  caption:'圖 4　資訊系統持續使用模式 ECM（Bhattacherjee, 2001）',
+  diagram:`flowchart LR
+  CF["確認程度<br/>Confirmation"] --> PU["知覺有用性<br/>Perceived usefulness"]
+  CF --> SAT["滿意度<br/>Satisfaction"]
+  PU --> SAT
+  PU --> CI["持續使用意圖<br/>IS continuance intention"]
+  SAT --> CI
+  class CF a
+  class PU,SAT b
+  class CI c`
+},
+{
+  id:'s5', idx:'五', name:'行為改變', en:'Behavior Change',
+  lede:'來自健康心理學與行為科學的介入導向理論，適用於探討科技如何促成長期習慣的養成或戒除，常見於健康促進、永續行為與數位助推研究。',
+  rows:[
+    ['計畫行為理論','TPB','The theory of planned behavior','Organizational Behavior and Human Decision Processes, 50(2), 179–211（Ajzen）','1991',165000,'https://doi.org/10.1016/0749-5978(91)90020-T'],
+    ['自我效能理論','Self-Efficacy','Self-Efficacy: Toward a Unifying Theory of Behavioral Change','Psychological Review, 84(2), 191–215（Bandura）','1977',110000,'https://doi.org/10.1037/0033-295X.84.2.191'],
+    ['自我決定理論','SDT','Self-Determination Theory and the Facilitation of Intrinsic Motivation','American Psychologist, 55(1), 68–78（Ryan & Deci）','2000',60000,'https://doi.org/10.1037/0003-066X.55.1.68'],
+    ['推力理論','Nudge','Nudge: Improving Decisions About Health, Wealth, and Happiness','Yale University Press（Thaler & Sunstein）','2008',25000,'https://scholar.google.com/scholar?q=Thaler+Sunstein+Nudge+2008'],
+    ['跨理論模式','TTM','Stages and Processes of Self-Change of Smoking','Journal of Consulting and Clinical Psychology, 51(3), 390–395（Prochaska & DiClemente）','1983',16000,'https://doi.org/10.1037/0022-006X.51.3.390'],
+    ['目標設定理論','Goal Setting','Building a Practically Useful Theory of Goal Setting and Task Motivation','American Psychologist, 57(9), 705–717（Locke & Latham）','2002',15000,'https://doi.org/10.1037/0003-066X.57.9.705'],
+    ['行為改變輪','COM-B / BCW','The Behaviour Change Wheel: A New Method for Characterising and Designing Behaviour Change Interventions','Implementation Science, 6, 42（Michie, van Stralen & West）','2011',12000,'https://doi.org/10.1186/1748-5908-6-42'],
+    ['健康信念模式','HBM','Historical Origins of the Health Belief Model','Health Education Monographs, 2(4), 328–335（Rosenstock）','1974',10000,'https://doi.org/10.1177/109019817400200403'],
+    ['保護動機理論','PMT','A Protection Motivation Theory of Fear Appeals and Attitude Change','Journal of Psychology, 91(1), 93–114（Rogers）','1975',9000,'https://doi.org/10.1080/00223980.1975.9915803'],
+    ['說服式設計／行為模型','PSD / FBM','A Behavior Model for Persuasive Design；Persuasive Systems Design','Persuasive \u201909（Fogg）；CAIS, 24, 485–500（Oinas-Kukkonen & Harjumaa）','2009',4000,'https://doi.org/10.1145/1541948.1541999']
+  ],
+  caption:'圖 5　COM-B 行為改變模型（Michie et al., 2011）',
+  diagram:`flowchart LR
+  CAP["能力<br/>Capability"] --> MOT["動機<br/>Motivation"]
+  OPP["機會<br/>Opportunity"] --> MOT
+  CAP --> BEH["行為<br/>Behaviour"]
+  OPP --> BEH
+  MOT --> BEH
+  BEH -.->|"回饋"| CAP
+  BEH -.->|"回饋"| OPP
+  class CAP,OPP a
+  class MOT b
+  class BEH c`
+},
+{
+  id:'s6', idx:'六', name:'關鍵成功因素', en:'Critical Success Factors',
+  lede:'以組織為分析單位，辨識導入成敗的前置條件。此面向的模型多來自策略管理與資訊管理領域，適合做為個案研究或專家訪談的編碼架構。',
+  rows:[
+    ['資源基礎觀點','RBV','Firm Resources and Sustained Competitive Advantage','Journal of Management, 17(1), 99–120（Barney）','1991',140000,'https://doi.org/10.1177/014920639101700108'],
+    ['動態能力','Dynamic Capabilities','Dynamic Capabilities and Strategic Management','Strategic Management Journal, 18(7), 509–533（Teece, Pisano & Shuen）','1997',75000,'https://doi.org/10.1002/(SICI)1097-0266(199708)18:7%3C509::AID-SMJ882%3E3.0.CO;2-Z'],
+    ['制度理論（同形化）','Institutional Theory','The Iron Cage Revisited: Institutional Isomorphism and Collective Rationality','American Sociological Review, 48(2), 147–160（DiMaggio & Powell）','1983',60000,'https://doi.org/10.2307/2095101'],
+    ['平衡計分卡','BSC','The Balanced Scorecard: Measures That Drive Performance','Harvard Business Review, 70(1), 71–79（Kaplan & Norton）','1992',30000,'https://scholar.google.com/scholar?q=Kaplan+Norton+Balanced+Scorecard+1992'],
+    ['資訊系統成功模式（初版）','IS Success','Information Systems Success: The Quest for the Dependent Variable','Information Systems Research, 3(1), 60–95（DeLone & McLean）','1992',20000,'https://doi.org/10.1287/isre.3.1.60'],
+    ['科技—組織—環境架構','TOE','The Processes of Technological Innovation','Lexington Books（Tornatzky & Fleischer）','1990',9000,'https://scholar.google.com/scholar?q=Tornatzky+Fleischer+Processes+of+Technological+Innovation+1990'],
+    ['關鍵成功因素法','CSF Method','Chief Executives Define Their Own Data Needs','Harvard Business Review, 57(2), 81–93（Rockart）','1979',5000,'https://scholar.google.com/scholar?q=Rockart+Chief+executives+define+their+own+data+needs+1979'],
+    ['專案成功因素模式','PIP','Critical Factors in Successful Project Implementation','IEEE Transactions on Engineering Management, EM-34(1), 22–27（Pinto & Slevin）','1987',4500,'https://doi.org/10.1109/TEM.1987.6498856'],
+    ['ERP 導入關鍵成功因素','ERP CSF','A Critical Success Factors Model for ERP Implementation','IEEE Software, 16(3), 30–36（Holland & Light）','1999',2500,'https://doi.org/10.1109/52.765784'],
+    ['ERP 跨階段 CSF','Stage-based CSF','The Impact of Critical Success Factors Across the Stages of ERP Implementations','HICSS-34（Somers & Nelson）','2001',2000,'https://doi.org/10.1109/HICSS.2001.927129']
+  ],
+  caption:'圖 6　科技—組織—環境架構 TOE（Tornatzky & Fleischer, 1990）',
+  diagram:`flowchart LR
+  T["技術脈絡<br/>相對優勢、相容性、複雜性"] --> AD["導入決策<br/>Adoption decision"]
+  O["組織脈絡<br/>高層支持、規模、資源"] --> AD
+  EN["環境脈絡<br/>競爭壓力、法規、產業夥伴"] --> AD
+  AD --> PF["導入成效<br/>Implementation performance"]
+  class T,O,EN a
+  class AD b
+  class PF c`
+}
+];
+
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+const shortUrl = u => { const t = u.replace(/^https?:\/\//,''); return t.length > 44 ? t.slice(0,42)+'…' : t; };
+const fmt = n => '~' + n.toLocaleString('en-US');
+
+let theme = 'qing';
+let seq = 0;
+
+function paint(src){
+  const t = THEMES[theme];
+  return (src + CLASSDEF)
+    .replaceAll('__AF__',t.a[0]).replaceAll('__AS__',t.a[1]).replaceAll('__AT__',t.a[2])
+    .replaceAll('__BF__',t.b[0]).replaceAll('__BS__',t.b[1]).replaceAll('__BT__',t.b[2])
+    .replaceAll('__CF__',t.c[0]).replaceAll('__CS__',t.c[1]).replaceAll('__CT__',t.c[2]);
+}
+
+function initMermaid(){
+  const t = THEMES[theme];
+  mermaid.initialize({
+    startOnLoad:false, theme:'base', securityLevel:'loose',
+    fontFamily:'"Noto Sans TC", system-ui, sans-serif',
+    themeVariables:{ darkMode:t.dark, fontSize:'14px', lineColor:t.line, textColor:t.ink,
+      primaryColor:t.a[0], primaryBorderColor:t.a[1], primaryTextColor:t.a[2] },
+    flowchart:{ curve:'basis', nodeSpacing:46, rankSpacing:64, padding:12 }
+  });
+}
+
+function sectionHTML(s){
+  const max = Math.max(...s.rows.map(r => r[5]));
+  const body = s.rows.map((r,i) => `
+    <tr>
+      <td class="n">${i+1}</td>
+      <td class="model">${esc(r[0])}<small>${esc(r[1])}</small></td>
+      <td>${esc(r[2])}</td>
+      <td class="src">${esc(r[3])}</td>
+      <td class="yr">${r[4]}</td>
+      <td class="c">${fmt(r[5])}<span class="bar" style="width:${Math.round(r[5]/max*72)}px"></span></td>
+      <td><a href="${esc(r[6])}" target="_blank" rel="noopener">${esc(shortUrl(r[6]))}</a></td>
+    </tr>`).join('');
+  return `
+  <div class="sec-head"><h2>${s.idx}、${s.name}</h2><span class="en">${s.en}</span></div>
+  <p class="lede">${s.lede}</p>
+  <div class="table-scroll">
+    <table>
+      <thead><tr><th>序號</th><th>模型名稱（中／英）</th><th>論文名稱／標題</th><th>出處</th><th>年份</th><th>約略引用數</th><th>URL</th></tr></thead>
+      <tbody>${body}</tbody>
+    </table>
+  </div>
+  <figure>
+    <div class="diagram" id="dg"><span class="loading">模型圖繪製中…</span></div>
+    <figcaption>${esc(s.caption)}</figcaption>
+    <details><summary>顯示 Mermaid 原始碼</summary><pre>${esc(s.diagram)}</pre></details>
+  </figure>
+  <p class="foot-note">引用數為 Google Scholar 量級估計，非精確值；專書類條目因版本分散，與 Scopus、Web of Science 可能有數倍差距，正式引用前請重新查證。</p>`;
+}
+
+const nav = document.getElementById('nav');
+const main = document.getElementById('main');
+let current = SECTIONS[0].id;
+
+SECTIONS.forEach(s => {
+  const b = document.createElement('button');
+  b.type = 'button';
+  b.dataset.id = s.id;
+  b.setAttribute('aria-current', s.id === current ? 'true' : 'false');
+  b.innerHTML = `<span class="idx">${s.idx}</span>${s.name}<span class="en">${s.en}</span>`;
+  b.addEventListener('click', () => select(s.id));
+  nav.appendChild(b);
+});
+
+async function drawDiagram(s){
+  const host = document.getElementById('dg');
+  if (!host) return;
+  try{
+    const { svg } = await mermaid.render('mmd-' + (seq++), paint(s.diagram));
+    host.innerHTML = svg;
+  }catch(err){
+    host.innerHTML = '<span class="loading">模型圖無法載入，請確認網路連線後重新整理。</span>';
+  }
+}
+
+function select(id){
+  current = id;
+  nav.querySelectorAll('button').forEach(b =>
+    b.setAttribute('aria-current', b.dataset.id === id ? 'true' : 'false'));
+  const s = SECTIONS.find(x => x.id === id);
+  main.innerHTML = sectionHTML(s);
+  main.scrollTop = 0;
+  drawDiagram(s);
+}
+
+document.querySelectorAll('.swatch').forEach(btn => {
+  btn.addEventListener('click', () => {
+    theme = btn.dataset.theme;
+    document.documentElement.dataset.theme = theme;
+    document.querySelectorAll('.swatch').forEach(b =>
+      b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+    initMermaid();
+    drawDiagram(SECTIONS.find(x => x.id === current));
+  });
+});
+
+initMermaid();
+select(current);
+</script>
+</body>
+</html>
