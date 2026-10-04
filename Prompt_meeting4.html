@@ -1,0 +1,1970 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>提示詞：CSE-CIC-IDS2018 DataSet 研究 — 第四次論文討論會</title>
+<style>
+:root{
+  --p900:#2E1A52; --p800:#3B2468; --p700:#4B2E83; --p600:#6A4C9C; --p500:#8E7CC3;
+  --p300:#B4A7D6; --p100:#D9D2E9; --p050:#F3F0F9;
+  --accent:#C2185B; --ink:#1C1A22; --muted:#595959; --line:#E2DDEC;
+  --bg:#FFFFFF; --surface:#FBFAFD; --code:#F3F0F9;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --p700:#B9A6E8; --p600:#A694DD; --p500:#9684CF; --p300:#6F5E9B; --p100:#2E2743; --p050:#241F35;
+    --accent:#FF86B0; --ink:#EDEAF4; --muted:#A9A2BC; --line:#3A3350;
+    --bg:#15121E; --surface:#1C1829; --code:#241F35;
+  }
+}
+:root[data-theme="dark"]{
+  --p700:#B9A6E8; --p600:#A694DD; --p500:#9684CF; --p300:#6F5E9B; --p100:#2E2743; --p050:#241F35;
+  --accent:#FF86B0; --ink:#EDEAF4; --muted:#A9A2BC; --line:#3A3350;
+  --bg:#15121E; --surface:#1C1829; --code:#241F35;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:"Noto Sans TC","Microsoft JhengHei","PingFang TC","Segoe UI",system-ui,-apple-system,sans-serif;
+  font-size:16px; line-height:1.75; -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:40px}
+@media (max-width:900px){ .wrap{grid-template-columns:1fr;gap:0} }
+
+header.hero{background:linear-gradient(135deg,var(--p800),var(--p600));color:#fff;padding:40px 0 34px;margin-bottom:28px}
+header.hero .inner{max-width:1180px;margin:0 auto;padding:0 16px}
+header.hero h1{margin:0 0 10px;font-size:1.9rem;line-height:1.35;font-weight:700;letter-spacing:.01em}
+@media (max-width:640px){ header.hero h1{font-size:1.4rem} }
+header.hero .sub{opacity:.92;font-size:.95rem;margin:0}
+.badges{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px}
+.badge{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);border-radius:999px;padding:4px 12px;font-size:.78rem;white-space:nowrap}
+
+nav.toc{position:sticky;top:16px;align-self:start;max-height:calc(100vh - 32px);overflow:auto;
+  border-left:3px solid var(--p100);padding:4px 0 4px 14px;font-size:.86rem}
+@media (max-width:900px){ nav.toc{position:static;max-height:none;border-left:none;border-bottom:1px solid var(--line);
+  margin-bottom:24px;padding:0 0 16px} }
+nav.toc .tl{font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+nav.toc ul{list-style:none;margin:0;padding:0}
+nav.toc ul ul{padding-left:12px}
+nav.toc li{margin:3px 0}
+nav.toc a{color:var(--muted);text-decoration:none;display:block;padding:2px 0;border-radius:4px}
+nav.toc a:hover{color:var(--p700)}
+
+main{min-width:0;padding-bottom:72px}
+main h2{font-size:1.32rem;margin:46px 0 14px;padding:10px 0 8px 14px;border-left:5px solid var(--p700);
+  color:var(--p700);line-height:1.4}
+main h2:first-of-type{margin-top:8px}
+main h3{font-size:1.06rem;margin:30px 0 10px;color:var(--p600)}
+main p{margin:12px 0}
+main ul,main ol{padding-left:1.4em;margin:12px 0}
+main li{margin:5px 0}
+main hr{border:0;border-top:1px solid var(--line);margin:40px 0}
+main a{color:var(--p600);word-break:break-word}
+strong{color:var(--p700);font-weight:700}
+code{background:var(--code);border-radius:4px;padding:1px 5px;font-size:.88em;
+  font-family:ui-monospace,SFMono-Regular,"Cascadia Mono",Menlo,Consolas,monospace}
+blockquote{margin:16px 0;padding:12px 16px;background:var(--p050);border-left:4px solid var(--p500);
+  border-radius:0 8px 8px 0;color:var(--ink)}
+blockquote p{margin:6px 0}
+
+.tablewrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:.88rem;min-width:420px}
+thead th{background:var(--p700);color:#fff;font-weight:600;text-align:left;padding:9px 12px;
+  white-space:nowrap;border-right:1px solid rgba(255,255,255,.18)}
+thead th:last-child{border-right:none}
+tbody td{padding:8px 12px;border-top:1px solid var(--line);vertical-align:top}
+tbody tr:nth-child(even){background:var(--p050)}
+tbody tr:hover{background:var(--p100)}
+
+footer{border-top:1px solid var(--line);padding:22px 0 40px;color:var(--muted);font-size:.84rem;text-align:center}
+
+.themebtn{position:fixed;right:16px;bottom:16px;z-index:50;border:1px solid var(--line);background:var(--surface);
+  color:var(--ink);border-radius:999px;padding:8px 14px;font-size:.82rem;cursor:pointer;
+  box-shadow:0 2px 10px rgba(0,0,0,.12)}
+@media print{
+  nav.toc,.themebtn{display:none}
+  .wrap{display:block;max-width:none;padding:0}
+  header.hero{background:none;color:#000;border-bottom:3px solid #4B2E83;padding:0 0 12px}
+  header.hero h1{color:#4B2E83}
+  .badge{border-color:#999;background:none;color:#333}
+  body{font-size:10.5pt}
+  thead th{background:#4B2E83 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  tbody tr:nth-child(even){background:#F3F0F9 !important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  main h2{page-break-after:avoid}
+  table,blockquote{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<header class="hero"><div class="inner">
+  <h1>提示詞：CSE-CIC-IDS2018 DataSet 研究 — 第四次論文討論會</h1>
+  <p class="sub">把本檔全文貼給 AI 執行，即可重現／延伸「人工智慧應用 NetFlow 網路流量異常行為分析研究（四）」之簡報與報告。</p>
+  <div class="badges">
+    <span class="badge">撰寫日期 2026-10-04</span>
+    <span class="badge">10 個 CSV · 16,233,002 筆</span>
+    <span class="badge">24 個攻擊事件</span>
+    <span class="badge">三層窮舉 14／10／0</span>
+    <span class="badge">跨日 59／35 種 n-gram</span>
+    <span class="badge">9 序列達門檻（8 類型一 · 1 類型二）</span>
+  </div>
+</div></header>
+
+<div class="wrap">
+  <nav class="toc"><div class="tl">目錄</div><div class="toc">
+<ul>
+<li><a href="#0">0. 角色與總目標</a><ul>
+<li><a href="#01">0.1 交付物</a></li>
+<li><a href="#02">0.2 三項不可妥協的品質要求</a></li>
+</ul>
+</li>
+<li><a href="#1">1. 研究主題與三個研究問題</a></li>
+<li><a href="#2">2. 前次會議（三）追蹤項目：必須逐項交代辦理情形</a></li>
+<li><a href="#3">3. 分析標的與資料規模</a><ul>
+<li><a href="#31">3.1 三項資料品質前提（分析前必須揭露）</a></li>
+<li><a href="#32">3.2 其他須說明的資料陷阱</a></li>
+</ul>
+</li>
+<li><a href="#4-7-14-label">4. 攻擊類型盤點：7 大類型 × 14 種 Label</a><ul>
+<li><a href="#41-heartbleed">4.1 Heartbleed 三重查證（必須重現）</a></li>
+</ul>
+</li>
+<li><a href="#5">5. 方法與關鍵參數（每一項都要寫出選擇理由）</a><ul>
+<li><a href="#51">5.1 三層窮舉架構（粒度決定模式判定結果）</a></li>
+<li><a href="#52">5.2 模式類型之定義與判定程序</a></li>
+</ul>
+</li>
+<li><a href="#6">6. 必須重現的參考值（實算結果若有差異，須說明原因，不可硬改數字去配合）</a><ul>
+<li><a href="#61-24">6.1 24 個攻擊事件總表</a></li>
+<li><a href="#62-14">6.2 層級一（爆發區段層）：單日內 14 種相異排序</a></li>
+<li><a href="#63-10">6.3 層級二（活動層）：單日內 10 種相異排序</a></li>
+<li><a href="#64-59-n-gram6">6.4 跨日全域鏈：59 種 n-gram，6 種達門檻</a></li>
+<li><a href="#65">6.5 各層級之序列數量與重複次數分布</a></li>
+<li><a href="#66">6.6 達門檻排序之重複次數明細</a></li>
+<li><a href="#67-k-10">6.7 每日雙波節奏（k = 10，最高可信度量測）</a></li>
+<li><a href="#68-9">6.8 9 個達門檻序列之類型判定</a></li>
+<li><a href="#69">6.9 理論排列空間與覆蓋率</a></li>
+</ul>
+</li>
+<li><a href="#7-sops1s7">7. 攻擊者 SOP：S1–S7（每一條都要附量化依據）</a><ul>
+<li><a href="#71">7.1 程式化攻擊之三尺度量化證據</a></li>
+<li><a href="#72">7.2 跨日基礎設施重用（唯一可跨日佐證來源同一性的實例）</a></li>
+</ul>
+</li>
+<li><a href="#8-q1">8. 原始資料列佐證（Q1 的「實證」要求）</a><ul>
+<li><a href="#81">8.1 逐分鐘流量直方圖</a></li>
+</ul>
+</li>
+<li><a href="#9-cohens-d">9. 關鍵欄位統計對照（Cohen's d）</a></li>
+<li><a href="#10">10. 官方工具記載與實測差異彙整</a></li>
+<li><a href="#11-c1c7">11. 結論 C1–C7</a><ul>
+<li><a href="#111">11.1 研究限制（須逐項列出影響程度）</a></li>
+<li><a href="#112">11.2 誠實解讀的紅線</a></li>
+</ul>
+</li>
+<li><a href="#12">12. 後續工作與下次討論議題</a></li>
+<li><a href="#13">13. 簡報格式規範</a><ul>
+<li><a href="#131">13.1 建議章節配置</a></li>
+</ul>
+</li>
+<li><a href="#14">14. 圖表風格</a></li>
+<li><a href="#15">15. 參考文獻規範</a><ul>
+<li><a href="#151">15.1 引用鍵格式</a></li>
+<li><a href="#152-18">15.2 本次簡報之 18 筆文獻清單</a></li>
+</ul>
+</li>
+<li><a href="#16">16. 數據驗證（新增數據一律須通過）</a><ul>
+<li><a href="#161">16.1 正確性（算得對不對）</a></li>
+<li><a href="#162">16.2 合理性（數字說得通嗎）</a></li>
+<li><a href="#163">16.3 產出</a></li>
+</ul>
+</li>
+<li><a href="#17">17. 執行流程與驗收</a></li>
+</ul>
+</div>
+</nav>
+  <main><blockquote>
+<p><strong>用法</strong>：把本檔全文貼給 AI（Claude 等）執行，即可重現／延伸「人工智慧應用 NetFlow 網路流量異常行為分析研究（四）」之簡報與報告。
+<strong>撰寫日期</strong>：2026-10-04（中華民國 115 年 10 月 4 日）
+<strong>研究生</strong>：林正修｜<strong>指導老師</strong>：許建隆 教授｜長庚大學 管理學院 資訊管理學系 EMBA
+<strong>資料版本</strong>：<code>C:\01CSE-CIC-IDS2018\ids2018_csv_修正版\sorted\</code>（已排序、已修正、已全量驗證）</p>
+<p><strong>最高原則</strong>：本提示詞只規範「要產出什麼、怎麼分析」。<strong>執行前若有任何不清楚之處，必須先向使用者提問確認，不可自行假設；所有數字一律由程式實算，嚴禁憑記憶或估計填寫。</strong></p>
+</blockquote>
+<hr />
+<h2 id="0">0. 角色與總目標</h2>
+<p>你是一位同時熟悉<strong>網路入侵偵測（NIDS）</strong>與 <strong>Process Mining（流程探勘）</strong>的資安資料科學家。</p>
+<p><strong>總目標</strong>：以 NetFlow 流量統計特徵為基礎，運用 Process Mining 之事件日誌與序列探勘方法，自 CSE-CIC-IDS2018 逆向推導攻擊者之標準作業流程（SOP），並量化判定其行為模式類型。</p>
+<h3 id="01">0.1 交付物</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>交付物</th>
+<th>檔名</th>
+<th>規格</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>討論會簡報</td>
+<td><code>115MMDD 人工智慧應用Netflow網路流量異常行為分析研究(四).pptx</code></td>
+<td>4:3，約 52 頁</td>
+</tr>
+<tr>
+<td>數據驗證核對表</td>
+<td><code>數據驗證核對表.xlsx</code></td>
+<td>每一數字一列</td>
+</tr>
+<tr>
+<td>（選用）完整報告</td>
+<td><code>CSE-CIC-IDS2018_攻擊排序窮舉與模式類型判定報告.docx</code></td>
+<td>A4，約 40–60 頁</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="02">0.2 三項不可妥協的品質要求</h3>
+<ol>
+<li><strong>實測數據</strong>：每一個數字都要能由附錄程式碼重新產生。</li>
+<li><strong>圖表佐證</strong>：每一項主張都要有圖或表支撐。</li>
+<li><strong>學術文獻</strong>：每一頁至少 1 筆引用，文獻須逐筆查證、嚴禁捏造。</li>
+</ol>
+<hr />
+<h2 id="1">1. 研究主題與三個研究問題</h2>
+<p><strong>主題</strong>：CSE-CIC-IDS2018 — 攻擊排序完整窮舉、實證佐證與模式類型判定</p>
+<p><strong>關鍵詞</strong>：NetFlow、異常行為偵測、Process Mining、攻擊鏈（Attack Chain）、序列探勘（n-gram）、CSE-CIC-IDS2018、變異係數（CV）、攻擊者 SOP</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>代號</th>
+<th>研究問題</th>
+<th>作答方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Q1</strong></td>
+<td>資料集中存在哪些攻擊排序（attack ordering）？每一種排序的實際佐證為何？</td>
+<td>以三層抽象（爆發區段層／活動層／情境層）完整窮舉，每一種排序均附原始 CSV 行號與逐分鐘直方圖</td>
+</tr>
+<tr>
+<td><strong>Q2</strong></td>
+<td>各排序屬「固定序列、固定時間間隔」（類型一）或「固定序列、時間間隔可變」（類型二）？</td>
+<td>以步驟間隔之變異係數 CV = std／mean 量化，CV ≤ 0.25 判為類型一，CV &gt; 0.25 判為類型二</td>
+</tr>
+<tr>
+<td><strong>Q3</strong></td>
+<td>各排序重複出現幾次？是否達到可識別模式之門檻？</td>
+<td>重複出現 ≥ 2 次即視為一個可識別的行為模式</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="2">2. 前次會議（三）追蹤項目：必須逐項交代辦理情形</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>會議要求</th>
+<th>應呈現之辦理情形</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Process Mining 文獻回顧與演算法比較表</td>
+<td>已蒐集 SLR 與應用文獻 [MVM22][ABM18][RBC24][RBP25]；<strong>演算法比較表續辦</strong></td>
+</tr>
+<tr>
+<td>2-1</td>
+<td>2018 資料集是否存在固定攻擊序列模式</td>
+<td>已完成：三層窮舉，列舉 14／10／0 種單日排序、59 種全域 n-gram</td>
+</tr>
+<tr>
+<td>2-2</td>
+<td>是否存在重複出現的攻擊行為</td>
+<td>已完成：9 種序列達 ≥2 次門檻；最高重複 10 次（每日雙波節奏）</td>
+</tr>
+<tr>
+<td>2-3</td>
+<td>說明識別模式所用之具體方法</td>
+<td>爆發區段萃取（gap &gt; 5 分）＋ n-gram 序列探勘 ＋ 變異係數 CV 分類 [WSA13]</td>
+</tr>
+<tr>
+<td>2-4</td>
+<td>查閱是否有論文對本資料集做過 Process Mining</td>
+<td><strong>尚未發現</strong>以 CSE-CIC-IDS2018 直接做 Process Mining 之文獻，續查</td>
+</tr>
+<tr>
+<td>3</td>
+<td>資料共享與專案管理工具</td>
+<td>Google 雲端硬碟已建置；Notion 評估中</td>
+</tr>
+</tbody>
+</table></div>
+<p>另須重述前次會議之三項共識：
+- <strong>模式類型</strong>：類型一（固定序列、固定間隔）／類型二（固定序列、間隔可變）／類型三（條件式分支）
+- <strong>判定門檻</strong>：某攻擊順序重複出現 2 次以上，即視為一個可識別的行為模式
+- <strong>紅隊 vs 駭客</strong>：紅隊演練人工客製化，不易產生固定模式；真實駭客多以自動化程式執行，SOP 固定、僅間隔變化</p>
+<hr />
+<h2 id="3">3. 分析標的與資料規模</h2>
+<ul>
+<li><strong>標的</strong>：CSE-CIC-IDS2018 之 <em>Processed Traffic Data for ML Algorithms</em> 目錄下 <strong>10 個 CSV</strong>，由 CICFlowMeter-V3 自 PCAP 萃取之雙向流統計特徵 [C18][DLM16]</li>
+<li><strong>期間</strong>：2018-02-14 ～ 2018-03-02，共 <strong>10 個工作日</strong></li>
+<li><strong>規模</strong>：合計 <strong>16,233,002 筆</strong>＝Benign 13,484,708 ＋ 攻擊 2,748,235 ＋ 重複表頭 59 列</li>
+<li><strong>欄位</strong>：日檔 80 欄；02/20 另多 <code>Flow ID, Src IP, Src Port, Dst IP</code>，共 84 欄（<strong>只有 02/20 有 IP</strong>）</li>
+<li><strong>分段讀取</strong>：02/20 讀 <code>sorted\split2\part_01.csv～part_14.csv</code>，共 7,948,748 列，依序串接即為完整一天</li>
+<li><strong>排除</strong>：<code>summary.*</code>、<code>rf_output\</code> 不是資料</li>
+</ul>
+<h3 id="31">3.1 三項資料品質前提（分析前必須揭露）</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>代號</th>
+<th>問題</th>
+<th>具體事實</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>(a)</td>
+<td><strong>截斷</strong></td>
+<td>7 檔列數恰為 1,048,575 ＝ Excel 上限 −1。02/21 之 HOIC 實測止於 14:33，官網公告至 15:05，短少約 32 分鐘；02/16 Hulk 止於 13:48</td>
+</tr>
+<tr>
+<td>(b)</td>
+<td><strong>12 小時制</strong></td>
+<td>Timestamp 小時值僅 1–12，AM/PM 已被剝除；CSV 列序與時間無單調關係，無法以列序還原。所有量化結果均以<strong>同一半日內之相對時間差</strong>計算，不依賴任何假設</td>
+</tr>
+<tr>
+<td>(c)</td>
+<td><strong>標記錯誤</strong></td>
+<td>02/20 標記為 LOIC-HTTP 之 797 筆 <code>Protocol=17</code>（UDP），實為 LOIC-UDP。資料集標記品質問題於既有文獻亦有實證 [LGH23]</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="32">3.2 其他須說明的資料陷阱</h3>
+<ol>
+<li>14 列時間為 1970 年（02/14 五列、02/22 九列），<strong>分析時排除</strong>。</li>
+<li><code>Inf</code> 共 131,799 格（出現在 <code>Flow Byts/s</code>、<code>Flow Pkts/s</code>）；<code>NaN</code> 共 59,721 格。</li>
+<li>8 欄全為常數（10 檔皆為 0）：<code>Bwd PSH Flags, Bwd URG Flags, Fwd Byts/b Avg, Fwd Pkts/b Avg, Fwd Blk Rate Avg, Bwd Byts/b Avg, Bwd Pkts/b Avg, Bwd Blk Rate Avg</code> — 建模前應剔除。</li>
+<li>Label 原始拼字為 <code>Infilteration</code>（錯字），<strong>引用資料時須沿用，正文寫 Infiltration 並加註</strong>。</li>
+</ol>
+<hr />
+<h2 id="4-7-14-label">4. 攻擊類型盤點：7 大類型 × 14 種 Label</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>7 大類型</th>
+<th>資料集中之 Label（筆數）</th>
+<th>日期</th>
+<th>主要 Dst Port</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Brute-force</td>
+<td>FTP-BruteForce (193,360)、SSH-Bruteforce (187,589)</td>
+<td>02/14</td>
+<td>21、22</td>
+</tr>
+<tr>
+<td>DoS</td>
+<td>GoldenEye (41,508)、Slowloris (10,990)、SlowHTTPTest (139,890)、Hulk (461,912)</td>
+<td>02/15–16</td>
+<td>80、21</td>
+</tr>
+<tr>
+<td><strong>Heartbleed</strong></td>
+<td><strong>（不存在，0 筆）</strong></td>
+<td>—</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Web attacks</td>
+<td>Brute Force -Web (611)、Brute Force -XSS (230)、SQL Injection (87)</td>
+<td>02/22–23</td>
+<td>80</td>
+</tr>
+<tr>
+<td>Botnet</td>
+<td>Bot (286,191)</td>
+<td>03/02</td>
+<td>8080</td>
+</tr>
+<tr>
+<td>DDoS</td>
+<td>LOIC-HTTP (576,191)、LOIC-UDP (1,730)、HOIC (686,012)</td>
+<td>02/20–21</td>
+<td>80</td>
+</tr>
+<tr>
+<td>Infiltration</td>
+<td>Infilteration (161,934)</td>
+<td>02/28–03/01</td>
+<td>53、443、3389、445</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="41-heartbleed">4.1 Heartbleed 三重查證（必須重現）</h3>
+<ol>
+<li>Label 值域列舉 → 無此標記</li>
+<li>6,887 MB 全檔關鍵字掃描 → 匹配數 0</li>
+<li>Port 443／444 之攻擊流量 → 全部歸屬 Infilteration</li>
+</ol>
+<p><strong>對研究之影響</strong>：本目錄資料實際涵蓋 <strong>6 大</strong>攻擊情境，不能宣稱涵蓋 7 大。在 7×7 = 49 種二步驟轉移的理論空間中，含 Heartbleed 者共 <strong>13 格必然為空</strong>（非未觀察到，而是不可能觀察到）。若須涵蓋，應自 <em>Original Network Traffic and Log data</em> 目錄之原始 PCAP 重新萃取。[DLK14]</p>
+<hr />
+<h2 id="5">5. 方法與關鍵參數（每一項都要寫出選擇理由）</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>參數</th>
+<th>取值</th>
+<th>選擇理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>爆發區段切割門檻</td>
+<td><strong>gap &gt; 5 分鐘</strong></td>
+<td>資料集設計為每日上午／下午兩波，兩波間隔均 ≥ 90 分鐘；5 分鐘足以分離兩波而不誤切單波內短暫空檔</td>
+</tr>
+<tr>
+<td>最小事件筆數</td>
+<td><strong>n ≥ 5</strong></td>
+<td>30 個爆發區段中 6 個筆數 &lt; 5（合計僅 7 筆），視為離群雜訊排除，餘 <strong>24 個</strong>為分析對象</td>
+</tr>
+<tr>
+<td>可識別模式門檻</td>
+<td><strong>出現 ≥ 2 次</strong></td>
+<td>出現 1 次無法排除偶然；2 次以上方可視為攻擊者之固定作法</td>
+</tr>
+<tr>
+<td>類型一／二分界</td>
+<td><strong>CV ≤ 0.25</strong></td>
+<td>標準差不超過平均值四分之一，屬統計上常用之低變異判準；多步驟序列取各步驟 CV 之算術平均</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="51">5.1 三層窮舉架構（粒度決定模式判定結果）</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>層級</th>
+<th>列舉單位</th>
+<th>合併規則</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>層級一　爆發區段層</strong></td>
+<td>24 個爆發區段</td>
+<td>不做任何合併</td>
+</tr>
+<tr>
+<td><strong>層級二　活動層</strong></td>
+<td>20 個活動</td>
+<td>同名且起始間隔 &lt; 60 分鐘之相鄰區段合併為單一活動</td>
+</tr>
+<tr>
+<td><strong>層級三　情境層</strong></td>
+<td>10 個情境</td>
+<td>每日以其唯一攻擊情境代表</td>
+</tr>
+</tbody>
+</table></div>
+<p>另加兩條跨日序列：
+- <strong>跨日全域鏈</strong>：24 個事件不分日期、依真實時間順序串接為長度 24 之序列，列舉 n = 2～4 之 n-gram
+- <strong>跨日情境鏈</strong>：10 個情境依日期串接為長度 10 之序列，列舉 n = 2～6 之 n-gram</p>
+<blockquote>
+<p><strong>層級三單日內為 0 種的意義</strong>：每一工作日僅執行單一攻擊情境（如 02/22 整日只有 Web attacks），故情境層之排序只能在跨日尺度觀察；此為資料集排程設計所致，非分析方法之限制。
+<strong>完整列舉亦須包含只出現 1 次者</strong>，使「達門檻／未達門檻」之分界可被檢驗，避免門檻設定過鬆或過嚴而不自知 [WSA13]。</p>
+</blockquote>
+<h3 id="52">5.2 模式類型之定義與判定程序</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>模式類型</th>
+<th>定義</th>
+<th>辨識難度</th>
+<th>量化判準</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>類型一</strong></td>
+<td>固定序列、固定時間間隔</td>
+<td>容易</td>
+<td>序列一致，且各步驟間隔之 CV ≤ 0.25</td>
+</tr>
+<tr>
+<td><strong>類型二</strong></td>
+<td>固定序列、時間間隔可變</td>
+<td>中等，仍可透過順序辨識</td>
+<td>序列一致，但 CV &gt; 0.25</td>
+</tr>
+<tr>
+<td><strong>類型三</strong></td>
+<td>條件式分支序列</td>
+<td>較難分析</td>
+<td>本資料集未觀察到（每日排程固定，無分支）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>判定程序</strong>：① 取序列全部出現實例（k ≥ 2）；② 對第 j 個步驟間隔收集 k 個觀測值，計算平均、樣本標準差（<code>ddof=1</code>）與 CV = std／mean；③ 取各步驟 CV 之算術平均為整體 CV；④ 整體 CV ≤ 0.25 判為類型一。</p>
+<blockquote>
+<p><strong>k = 2 的 CV 須謹慎解讀</strong>：樣本標準差由 2 個觀測值估計，穩定度有限，應視為「指示性」而非「結論性」數值。唯一 k = 10 的量測（每日雙波節奏）統計可信度最高。</p>
+</blockquote>
+<hr />
+<h2 id="6">6. 必須重現的參考值（實算結果若有差異，須說明原因，不可硬改數字去配合）</h2>
+<h3 id="61-24">6.1 24 個攻擊事件總表</h3>
+<blockquote>
+<p>以「同一 Label 中斷 &gt; 5 分鐘即切割」規則萃取；事件流量合計 2,748,228 筆（佔攻擊總量 99.9997%）。
+<code>*</code> 表示 Label 為 LOIC-HTTP 但 <code>Protocol = 17</code>（UDP），依 Protocol 更正為 LOIC-UDP。</p>
+</blockquote>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>編號</th>
+<th>日期</th>
+<th>攻擊 Label／類型</th>
+<th>24h 區段</th>
+<th>時長／筆數</th>
+<th>官網誤差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>E01</td>
+<td>02-14</td>
+<td>FTP-BruteForce／Brute-force</td>
+<td>10:33–12:10</td>
+<td>98 分／193,360</td>
+<td>1 分</td>
+</tr>
+<tr>
+<td>E02</td>
+<td>02-14</td>
+<td>SSH-Bruteforce／Brute-force</td>
+<td>14:01–15:32</td>
+<td>92 分／187,589</td>
+<td>0 分</td>
+</tr>
+<tr>
+<td>E03</td>
+<td>02-15</td>
+<td>DoS-GoldenEye／DoS</td>
+<td>09:27–09:31</td>
+<td>5 分／10,381</td>
+<td>1 分</td>
+</tr>
+<tr>
+<td>E04</td>
+<td>02-15</td>
+<td>DoS-GoldenEye／DoS</td>
+<td>09:37–09:40</td>
+<td>4 分／7,959</td>
+<td>11 分</td>
+</tr>
+<tr>
+<td>E05</td>
+<td>02-15</td>
+<td>DoS-GoldenEye／DoS</td>
+<td>09:49–10:02</td>
+<td>14 分／23,168</td>
+<td>23 分</td>
+</tr>
+<tr>
+<td>E06</td>
+<td>02-15</td>
+<td>DoS-Slowloris／DoS</td>
+<td>11:00–11:42</td>
+<td>43 分／10,990</td>
+<td>1 分</td>
+</tr>
+<tr>
+<td>E07</td>
+<td>02-16</td>
+<td>DoS-SlowHTTPTest／DoS</td>
+<td>10:12–10:58</td>
+<td>47 分／139,890</td>
+<td>0 分</td>
+</tr>
+<tr>
+<td>E08</td>
+<td>02-16</td>
+<td>DoS-Hulk／DoS</td>
+<td>13:45–13:48</td>
+<td>4 分／461,912</td>
+<td>0 分</td>
+</tr>
+<tr>
+<td>E09</td>
+<td>02-20</td>
+<td>DDoS-LOIC-HTTP／DDoS</td>
+<td>10:13–11:16</td>
+<td>64 分／575,394</td>
+<td>1 分</td>
+</tr>
+<tr>
+<td>E10</td>
+<td>02-20</td>
+<td>DDoS-LOIC-HTTP*／DDoS</td>
+<td>13:14–13:29</td>
+<td>16 分／797</td>
+<td>1 分</td>
+</tr>
+<tr>
+<td>E11</td>
+<td>02-21</td>
+<td>DDOS-LOIC-UDP／DDoS</td>
+<td>10:08–10:43</td>
+<td>36 分／1,730</td>
+<td>1 分</td>
+</tr>
+<tr>
+<td>E12</td>
+<td>02-21</td>
+<td>DDOS-HOIC／DDoS</td>
+<td>14:11–14:33</td>
+<td>（截斷）</td>
+<td>6 分</td>
+</tr>
+<tr>
+<td>E13</td>
+<td>02-22</td>
+<td>Brute Force -Web／Web</td>
+<td>10:13–11:23</td>
+<td>71 分／249</td>
+<td>4 分</td>
+</tr>
+<tr>
+<td>E14</td>
+<td>02-22</td>
+<td>Brute Force -XSS／Web</td>
+<td>13:51–14:28</td>
+<td>38 分／79</td>
+<td>1 分</td>
+</tr>
+<tr>
+<td>E15</td>
+<td>02-22</td>
+<td>SQL Injection／Web</td>
+<td>16:14–16:27</td>
+<td>14 分／31</td>
+<td>1 分</td>
+</tr>
+<tr>
+<td>E16</td>
+<td>02-23</td>
+<td>Brute Force -Web／Web</td>
+<td>09:57–11:02</td>
+<td>66 分／361</td>
+<td>6 分</td>
+</tr>
+<tr>
+<td>E17</td>
+<td>02-23</td>
+<td>Brute Force -XSS／Web</td>
+<td>13:01–14:10</td>
+<td>70 分／151</td>
+<td>1 分</td>
+</tr>
+<tr>
+<td>E18</td>
+<td>02-23</td>
+<td>SQL Injection／Web</td>
+<td>15:05–15:17</td>
+<td>13 分／50</td>
+<td>0 分</td>
+</tr>
+<tr>
+<td>E19</td>
+<td>02-28</td>
+<td>Infilteration／Infiltration</td>
+<td>10:50–12:04</td>
+<td>75 分／42,760</td>
+<td>0 分</td>
+</tr>
+<tr>
+<td>E20</td>
+<td>02-28</td>
+<td>Infilteration／Infiltration</td>
+<td>13:42–14:39</td>
+<td>58 分／26,111</td>
+<td>0 分</td>
+</tr>
+<tr>
+<td>E21</td>
+<td>03-01</td>
+<td>Infilteration／Infiltration</td>
+<td>09:57–10:54</td>
+<td>58 分／38,752</td>
+<td>0 分</td>
+</tr>
+<tr>
+<td>E22</td>
+<td>03-01</td>
+<td>Infilteration／Infiltration</td>
+<td>14:00–15:36</td>
+<td>97 分／54,311</td>
+<td>0 分</td>
+</tr>
+<tr>
+<td>E23</td>
+<td>03-02</td>
+<td>Bot／Botnet</td>
+<td>10:13–12:59</td>
+<td>167 分／144,900</td>
+<td>2 分</td>
+</tr>
+<tr>
+<td>E24</td>
+<td>03-02</td>
+<td>Bot／Botnet</td>
+<td>13:00–</td>
+<td>跨正午延續</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>官網交叉驗證</strong>：23 個可對照事件中，<strong>8 個誤差為 0 分鐘、21 個誤差 ≤ 6 分鐘</strong>。E04（11 分）與 E05（23 分）為 GoldenEye 之第二、三子區段，與 E03 同屬官網公告之同一次攻擊（09:26–10:09）。官網時程表<strong>僅作為交叉驗證與 AM/PM 還原之基準</strong>，所有統計數值均以 CSV 實測為準。</p>
+<h3 id="62-14">6.2 層級一（爆發區段層）：單日內 14 種相異排序</h3>
+<p><code>★</code> 表示達可識別模式門檻（≥ 2 次）。</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>排序（n-gram）</th>
+<th>步驟</th>
+<th>次數</th>
+<th>各次間隔（分）</th>
+<th>CV／類型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>BF-Web → BF-XSS → SQL Injection</td>
+<td>3</td>
+<td>2 ★</td>
+<td>[218,143] [184,124]</td>
+<td>0.110／一</td>
+</tr>
+<tr>
+<td>2</td>
+<td>BF-Web → BF-XSS</td>
+<td>2</td>
+<td>2 ★</td>
+<td>[218] [184]</td>
+<td>0.120／一</td>
+</tr>
+<tr>
+<td>3</td>
+<td>BF-XSS → SQL Injection</td>
+<td>2</td>
+<td>2 ★</td>
+<td>[143] [124]</td>
+<td>0.101／一</td>
+</tr>
+<tr>
+<td>4</td>
+<td>GoldenEye → GoldenEye</td>
+<td>2</td>
+<td>2 ★</td>
+<td>[10] [12]</td>
+<td>0.129／一</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Infilteration → Infilteration</td>
+<td>2</td>
+<td>2 ★</td>
+<td>[172] [243]</td>
+<td>0.242／一</td>
+</tr>
+<tr>
+<td>6</td>
+<td>GoldenEye ×3 → Slowloris</td>
+<td>4</td>
+<td>1</td>
+<td>[10,12,71]</td>
+<td>—</td>
+</tr>
+<tr>
+<td>7</td>
+<td>GoldenEye ×3（連續）</td>
+<td>3</td>
+<td>1</td>
+<td>[10,12]</td>
+<td>—</td>
+</tr>
+<tr>
+<td>8</td>
+<td>GoldenEye ×2 → Slowloris</td>
+<td>3</td>
+<td>1</td>
+<td>[12,71]</td>
+<td>—</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Bot → Bot</td>
+<td>2</td>
+<td>1</td>
+<td>[167]</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10</td>
+<td>LOIC-UDP → HOIC</td>
+<td>2</td>
+<td>1</td>
+<td>[243]</td>
+<td>—</td>
+</tr>
+<tr>
+<td>11</td>
+<td>LOIC-HTTP → LOIC-HTTP</td>
+<td>2</td>
+<td>1</td>
+<td>[181]</td>
+<td>—</td>
+</tr>
+<tr>
+<td>12–14</td>
+<td>（其餘單次組合，須完整列出）</td>
+<td>—</td>
+<td>1</td>
+<td>—</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="63-10">6.3 層級二（活動層）：單日內 10 種相異排序</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>排序（n-gram）</th>
+<th>次數</th>
+<th>各次間隔（分）</th>
+<th>CV／類型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>BF-Web → BF-XSS → SQL Injection</td>
+<td>2 ★</td>
+<td>[218,143] [184,124]</td>
+<td>0.110／類型一</td>
+</tr>
+<tr>
+<td>2</td>
+<td>BF-Web → BF-XSS</td>
+<td>2 ★</td>
+<td>[218] [184]</td>
+<td>0.120／類型一</td>
+</tr>
+<tr>
+<td>3</td>
+<td>BF-XSS → SQL Injection</td>
+<td>2 ★</td>
+<td>[143] [124]</td>
+<td>0.101／類型一</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Infilteration → Infilteration</td>
+<td>2 ★</td>
+<td>[172] [243]</td>
+<td>0.242／類型一</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Bot → Bot</td>
+<td>1</td>
+<td>[167]</td>
+<td>—</td>
+</tr>
+<tr>
+<td>6</td>
+<td>DDOS-LOIC-UDP → DDOS-HOIC</td>
+<td>1</td>
+<td>[243]</td>
+<td>—</td>
+</tr>
+<tr>
+<td>7</td>
+<td>LOIC-HTTP → LOIC-HTTP</td>
+<td>1</td>
+<td>[181]</td>
+<td>—</td>
+</tr>
+<tr>
+<td>8</td>
+<td>GoldenEye → Slowloris</td>
+<td>1</td>
+<td>[93]</td>
+<td>—</td>
+</tr>
+<tr>
+<td>9</td>
+<td>SlowHTTPTest → Hulk</td>
+<td>1</td>
+<td>[213]</td>
+<td>—</td>
+</tr>
+<tr>
+<td>10</td>
+<td>FTP-BruteForce → SSH-Bruteforce</td>
+<td>1</td>
+<td>[208]</td>
+<td>—</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>層級一 vs 層級二</strong>：層級一多出 4 種排序，全來自 02/15 之 GoldenEye 子區段；合併後「GoldenEye → GoldenEye」（CV = 0.129）於層級二消失。</p>
+</blockquote>
+<h3 id="64-59-n-gram6">6.4 跨日全域鏈：59 種 n-gram，6 種達門檻</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>排序</th>
+<th>步驟</th>
+<th>次數</th>
+<th>出現位置</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Infilteration → Infilteration</td>
+<td>2</td>
+<td>3 ★</td>
+<td>02-28 10:50／13:42；03-01 09:57</td>
+</tr>
+<tr>
+<td>2</td>
+<td>BF-Web → BF-XSS → SQL Injection</td>
+<td>3</td>
+<td>2 ★</td>
+<td>02-22 10:13；02-23 09:57</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Infilteration ×3</td>
+<td>3</td>
+<td>2 ★</td>
+<td>02-28 10:50；02-28 13:42</td>
+</tr>
+<tr>
+<td>4</td>
+<td>BF-Web → BF-XSS</td>
+<td>2</td>
+<td>2 ★</td>
+<td>02-22 10:13；02-23 09:57</td>
+</tr>
+<tr>
+<td>5</td>
+<td>BF-XSS → SQL Injection</td>
+<td>2</td>
+<td>2 ★</td>
+<td>02-22 13:51；02-23 13:01</td>
+</tr>
+<tr>
+<td>6</td>
+<td>GoldenEye → GoldenEye</td>
+<td>2</td>
+<td>2 ★</td>
+<td>02-15 09:27；02-15 09:37</td>
+</tr>
+</tbody>
+</table></div>
+<p>其餘 53 種為跨日相鄰所產生之一次性組合，<strong>仍須完整列出</strong>（附錄以縮寫表呈現）。</p>
+<p><strong>縮寫對照</strong>：<code>FTP</code>=FTP-BruteForce｜<code>SSH</code>=SSH-Bruteforce｜<code>GE</code>=GoldenEye｜<code>SL</code>=Slowloris｜<code>SHT</code>=SlowHTTPTest｜<code>HK</code>=Hulk｜<code>LH</code>=DDoS-LOIC-HTTP｜<code>LU</code>=DDOS-LOIC-UDP｜<code>HO</code>=DDOS-HOIC｜<code>BW</code>=Brute Force -Web｜<code>BX</code>=Brute Force -XSS｜<code>SQ</code>=SQL Injection｜<code>IN</code>=Infilteration｜<code>BT</code>=Bot</p>
+<p><strong>跨日情境鏈</strong>：35 種 n-gram（n = 2～6）<strong>全部僅出現 1 次</strong>；但抽象為「同一情境連續兩日重複」此一結構特徵，則出現 <strong>4 次</strong>（DoS、DDoS、Web attacks、Infiltration），達門檻。情境順序為：
+<code>Brute-force (02/14) → DoS (02/15–16) → DDoS (02/20–21) → Web attacks (02/22–23) → Infiltration (02/28–03/01) → Botnet (03/02)</code></p>
+<h3 id="65">6.5 各層級之序列數量與重複次數分布</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>層級</th>
+<th>列舉單位</th>
+<th style="text-align: right;">相異序列</th>
+<th style="text-align: right;">1 次</th>
+<th style="text-align: right;">2 次</th>
+<th style="text-align: right;">3 次</th>
+<th style="text-align: right;">達門檻比例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>層級一（單日內）</td>
+<td>24 個爆發區段</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">35.7%</td>
+</tr>
+<tr>
+<td>層級二（單日內）</td>
+<td>20 個活動</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">40.0%</td>
+</tr>
+<tr>
+<td>層級三（單日內）</td>
+<td>10 個情境</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">—</td>
+</tr>
+<tr>
+<td>跨日全域鏈</td>
+<td>24 事件依時間串接</td>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">10.2%</td>
+</tr>
+<tr>
+<td>跨日情境鏈</td>
+<td>10 情境依日期串接</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">0.0%</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="66">6.6 達門檻排序之重複次數明細</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>排序</th>
+<th style="text-align: right;">層一</th>
+<th style="text-align: right;">層二</th>
+<th style="text-align: right;">全域</th>
+<th style="text-align: right;">情境</th>
+<th>次數之具體來源</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BF-Web → BF-XSS → SQLi</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">—</td>
+<td>02/22、02/23 各一次</td>
+</tr>
+<tr>
+<td>BF-Web → BF-XSS</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">—</td>
+<td>同上兩日之前兩步</td>
+</tr>
+<tr>
+<td>BF-XSS → SQLi</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">—</td>
+<td>同上兩日之後兩步</td>
+</tr>
+<tr>
+<td>GoldenEye → GoldenEye</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">—</td>
+<td>02/15 三子區段（層二合併後消失）</td>
+</tr>
+<tr>
+<td>Infilteration → Infilteration</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">—</td>
+<td>全域鏈另含 02/28 下 → 03/01 上</td>
+</tr>
+<tr>
+<td>Infilteration ×3</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">—</td>
+<td>02/28 上 → 下 → 03/01 上</td>
+</tr>
+<tr>
+<td>DDoS 波次 1 → 波次 2</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">2</td>
+<td>02/20、02/21</td>
+</tr>
+<tr>
+<td>DoS 波次 1 → 波次 2</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">2</td>
+<td>02/15、02/16</td>
+</tr>
+<tr>
+<td>同一情境連續兩日重複</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">4</td>
+<td>DoS、DDoS、Web、Infiltration</td>
+</tr>
+<tr>
+<td>每日波次 1 → 波次 2</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">—</td>
+<td style="text-align: right;">10</td>
+<td>10 個工作日全部</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>重複的兩個來源</strong>：① 同一序列連續兩日重複執行（Web 三步驟鏈為最完整實例）；② 同一活動同日分兩波執行。沒有任何序列重複超過 3 次 — 此直接反映 10 個工作日、每情境僅執行兩日之規模限制。</p>
+</blockquote>
+<h3 id="67-k-10">6.7 每日雙波節奏（k = 10，最高可信度量測）</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>統計量</th>
+<th>波次 1 起始</th>
+<th>波次 2 起始</th>
+<th>波次 1→2 間隔</th>
+<th>間隔（排除 02/15）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>樣本數 k</td>
+<td>10</td>
+<td>10</td>
+<td>10</td>
+<td>9</td>
+</tr>
+<tr>
+<td>平均值</td>
+<td>10:10</td>
+<td>13:22</td>
+<td>192.2 分鐘</td>
+<td>203.2 分鐘</td>
+</tr>
+<tr>
+<td>標準差</td>
+<td>22.0 分鐘</td>
+<td>56.1 分鐘</td>
+<td>44.2 分鐘</td>
+<td>28.8 分鐘</td>
+</tr>
+<tr>
+<td><strong>變異係數 CV</strong></td>
+<td><strong>0.036</strong></td>
+<td><strong>0.070</strong></td>
+<td><strong>0.230（類型一）</strong></td>
+<td><strong>0.142（類型一）</strong></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>02/15 兩波皆排於上午（09:27、11:00），間隔僅 93 分鐘；其餘 9 日皆為上午一波、下午一波，間隔 167–243 分鐘。<strong>此離群值本身即為佐證：CV 判準確實對排程改變敏感。</strong></p>
+</blockquote>
+<h3 id="68-9">6.8 9 個達門檻序列之類型判定</h3>
+<ul>
+<li><strong>8 個類型一、1 個類型二</strong>。類型一之 CV 分布於 <strong>0.101–0.242</strong>；唯一類型二（DoS 波次 1→2，<strong>CV = 0.555</strong>）遠高於門檻。</li>
+<li>兩群之間存在明顯間隙（0.242 與 0.555 之間無任何觀測值），判定結果對門檻微調不敏感 — 此為門檻選擇合理性之佐證。</li>
+<li><strong>敏感度揭露</strong>：Infilteration → Infilteration 之 CV = 0.242 逼近門檻，若門檻改為 0.20 將改判為類型二。</li>
+</ul>
+<h3 id="69">6.9 理論排列空間與覆蓋率</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>數值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>理論空間</td>
+<td>49 格（7 種前置 × 7 種後續）</td>
+</tr>
+<tr>
+<td>必然為空</td>
+<td>13 格（Heartbleed 相關：第 7 列 7 格 ＋ 第 7 行 7 格 − 重疊 1 格）</td>
+</tr>
+<tr>
+<td>可觀察空間</td>
+<td>36 格</td>
+</tr>
+<tr>
+<td>實際觀察（跨日）</td>
+<td>9 種</td>
+</tr>
+<tr>
+<td>實際觀察（單日內）</td>
+<td>0 種（每日僅單一情境）</td>
+</tr>
+<tr>
+<td><strong>覆蓋率（理論空間）</strong></td>
+<td><strong>18.4%（9／49）</strong></td>
+</tr>
+<tr>
+<td><strong>覆蓋率（可觀察空間）</strong></td>
+<td><strong>25.0%（9／36）</strong></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>對論文的意義</strong>：覆蓋率僅 25.0%，且全部為「由外部攻擊推進至內部控制」之單一方向路徑。若欲建立通用攻擊鏈預測模型，此涵蓋率不足以支持對未觀察到的 27 種轉移做推論。</p>
+</blockquote>
+<hr />
+<h2 id="7-sops1s7">7. 攻擊者 SOP：S1–S7（每一條都要附量化依據）</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>SOP 步驟</th>
+<th>內容</th>
+<th>量化依據</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S1 每日排程</strong></td>
+<td>每工作日兩波：上午約 10:10、下午約 13:22</td>
+<td>10/10 日；CV = 0.036／0.070</td>
+</tr>
+<tr>
+<td><strong>S2 情境安排</strong></td>
+<td>同一情境連續執行兩個工作日後換工具</td>
+<td>出現 4 次</td>
+</tr>
+<tr>
+<td><strong>S3 工具輪替</strong></td>
+<td>同情境兩波使用不同工具</td>
+<td>GoldenEye/Slowloris → SlowHTTPTest/Hulk</td>
+</tr>
+<tr>
+<td><strong>S4 Web 三步驟</strong></td>
+<td>固定「表單破解 → XSS → SQL 注入」</td>
+<td>2/2 日一致，CV = 0.110</td>
+</tr>
+<tr>
+<td><strong>S5 單一目標</strong></td>
+<td>每波僅針對一個 Dst Port</td>
+<td>例外：Infilteration 分散</td>
+</tr>
+<tr>
+<td><strong>S6 固定連線參數</strong></td>
+<td>同工具全程相同 TCP 參數與發送速率</td>
+<td>FTP-BF 每分 1,991.5 ± 7.1 筆</td>
+</tr>
+<tr>
+<td><strong>S7 無夜間活動</strong></td>
+<td>24 個爆發區段全部落在 09:27–16:27</td>
+<td>甘特圖</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="71">7.1 程式化攻擊之三尺度量化證據</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>時間尺度</th>
+<th>觀測對象</th>
+<th>實測值</th>
+<th>意義</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>秒級</td>
+<td>連線參數與封包間隔</td>
+<td><code>Fwd Seg Size Min</code>、<code>Init Fwd Win Byts</code> 於整段攻擊期間恆為常數（如 40、26883）</td>
+<td>同一工具、同一組設定</td>
+</tr>
+<tr>
+<td>分鐘級</td>
+<td>每分鐘發送速率</td>
+<td>FTP-BF：1,991.5 ± 7.1 筆／分，CV = 0.0036；SSH-BF：2,068.6 ± 10.0 筆／分，CV = 0.0048</td>
+<td>變異低於千分之五，不可能由人工產生</td>
+</tr>
+<tr>
+<td>分鐘級</td>
+<td>GoldenEye 子區段節奏</td>
+<td>起始於 09:27、09:37、09:49，間隔 10 與 12 分鐘，CV = 0.129</td>
+<td>工具內部送出節奏亦由程式控制</td>
+</tr>
+<tr>
+<td>日級</td>
+<td>每日波次起始時刻</td>
+<td>波次 1 平均 10:10（CV = 0.036）、波次 2 平均 13:22（CV = 0.070）</td>
+<td>排程層級的規律</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>三個尺度一致指向同一結論：這些攻擊由程式依固定參數執行，因此其行為模式可被探勘、可被預測，也因此可作為偵測規則的依據 — 此即本研究以 Process Mining 逆向推導攻擊者 SOP 的可行性基礎 [A16][ABM18]。</p>
+</blockquote>
+<h3 id="72">7.2 跨日基礎設施重用（唯一可跨日佐證來源同一性的實例）</h3>
+<p>02/20 之 10 個 DDoS 來源 IP 中，<strong>18.218.115.60</strong> 亦為 02/22、02/23 Web 攻擊之來源 — 同一台攻擊機器先參與 DDoS、再執行 Web 攻擊，構成跨日攻擊鏈之基礎設施重用證據。</p>
+<hr />
+<h2 id="8-q1">8. 原始資料列佐證（Q1 的「實證」要求）</h2>
+<p>每個事件均須列出<strong>起始列／代表列／結束列</strong>三筆，並標明檔名與 CSV 行號（含表頭），可逐筆回查。範例（E01 FTP-BruteForce）：</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>欄位</th>
+<th>起始列</th>
+<th>代表列</th>
+<th>結束列</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CSV 行號</td>
+<td>第 96 行</td>
+<td>第 96 行</td>
+<td>第 353,916 行</td>
+</tr>
+<tr>
+<td>Timestamp</td>
+<td>14/02/2018 10:33:26</td>
+<td>14/02/2018 10:33:26</td>
+<td>14/02/2018 12:10:31</td>
+</tr>
+<tr>
+<td>Dst Port／Protocol</td>
+<td>21／6</td>
+<td>21／6</td>
+<td>21／6</td>
+</tr>
+<tr>
+<td>Flow Duration (μs)</td>
+<td>19</td>
+<td>19</td>
+<td>1</td>
+</tr>
+<tr>
+<td>Fwd Seg Size Min</td>
+<td>40</td>
+<td>40</td>
+<td>40</td>
+</tr>
+<tr>
+<td>Init Fwd Win Byts</td>
+<td>26883</td>
+<td>26883</td>
+<td>26883</td>
+</tr>
+<tr>
+<td>PSH／ACK Flag Cnt</td>
+<td>1／0</td>
+<td>1／0</td>
+<td>1／0</td>
+</tr>
+<tr>
+<td>Label</td>
+<td>FTP-BruteForce</td>
+<td>FTP-BruteForce</td>
+<td>FTP-BruteForce</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p><strong>註</strong>：CSV 未依 Timestamp 排序，行號僅供回查，不代表時間先後；時間先後一律以 <code>Timestamp</code> 欄位為準。
+<strong>解讀</strong>：三筆資料列之連線參數完全相同，<code>Flow Duration</code> 僅 1–19 μs，證明此攻擊由單一工具以同一組設定執行（官網記載為 Patator）。</p>
+</blockquote>
+<h3 id="81">8.1 逐分鐘流量直方圖</h3>
+<ul>
+<li>24 個事件各繪一張：縱軸＝該分鐘流量筆數，橫軸為 24 小時制還原時刻；各事件筆數總和須與事件總表完全相符。</li>
+<li>直方圖同時作為兩件事的佐證：① 爆發區段切割位置正確（區段內每一分鐘皆有流量、區段間空檔 &gt; 5 分鐘）；② 攻擊由程式執行（方波、階梯等規則形狀不可能來自人工操作）。</li>
+</ul>
+<hr />
+<h2 id="9-cohens-d">9. 關鍵欄位統計對照（Cohen's d）</h2>
+<p><strong>方法</strong>：取全部攻擊列與 Benign 抽樣列（1/20；02-20 檔為 1/100），將 76 個數值特徵依 Label 分群計算 mean／std／median／p95，再以 Cohen's d 衡量鑑別度；|d| ≥ 0.8 視為大效果量 [C88][DLM16]。</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>攻擊 Label</th>
+<th>最強鑑別特徵</th>
+<th style="text-align: right;">d</th>
+<th style="text-align: right;">攻擊中位數</th>
+<th style="text-align: right;">Benign 中位數</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FTP-BruteForce</td>
+<td>Fwd Seg Size Min</td>
+<td style="text-align: right;">10.35</td>
+<td style="text-align: right;">40.00</td>
+<td style="text-align: right;">20.00</td>
+</tr>
+<tr>
+<td>SSH-Bruteforce</td>
+<td>Fwd Seg Size Min</td>
+<td style="text-align: right;">6.81</td>
+<td style="text-align: right;">32.00</td>
+<td style="text-align: right;">20.00</td>
+</tr>
+<tr>
+<td>DoS-GoldenEye</td>
+<td>Fwd Seg Size Min</td>
+<td style="text-align: right;">3.27</td>
+<td style="text-align: right;">32.00</td>
+<td style="text-align: right;">20.00</td>
+</tr>
+<tr>
+<td>DoS-Slowloris</td>
+<td>Bwd IAT Mean (μs)</td>
+<td style="text-align: right;">2.69</td>
+<td style="text-align: right;">5.32e+7</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr>
+<td>DoS-SlowHTTPTest</td>
+<td>Init Fwd Win Byts</td>
+<td style="text-align: right;">129.57</td>
+<td style="text-align: right;">26,883</td>
+<td style="text-align: right;">219</td>
+</tr>
+<tr>
+<td>DoS-Hulk</td>
+<td>Fwd Pkt Len Max</td>
+<td style="text-align: right;">−11.35</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">935</td>
+</tr>
+<tr>
+<td>DDoS-LOIC-HTTP</td>
+<td>Fwd Pkt Len Mean</td>
+<td style="text-align: right;">−2.67</td>
+<td style="text-align: right;">6.67</td>
+<td style="text-align: right;">39.00</td>
+</tr>
+<tr>
+<td>DDOS-LOIC-UDP</td>
+<td>Fwd Act Data Pkts</td>
+<td style="text-align: right;">14.14</td>
+<td style="text-align: right;">119,758</td>
+<td style="text-align: right;">1.00</td>
+</tr>
+<tr>
+<td>DDOS-HOIC</td>
+<td>Init Bwd Win Byts</td>
+<td style="text-align: right;">−74.53</td>
+<td style="text-align: right;">−1.00</td>
+<td style="text-align: right;">32,768</td>
+</tr>
+<tr>
+<td>Brute Force -Web</td>
+<td>TotLen Fwd Pkts</td>
+<td style="text-align: right;">7.44</td>
+<td style="text-align: right;">646</td>
+<td style="text-align: right;">45.00</td>
+</tr>
+<tr>
+<td>Brute Force -XSS</td>
+<td>TotLen Fwd Pkts</td>
+<td style="text-align: right;">17.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">45.00</td>
+</tr>
+<tr>
+<td>SQL Injection</td>
+<td>Pkt Len Var</td>
+<td style="text-align: right;">2.39</td>
+<td style="text-align: right;">49,564</td>
+<td style="text-align: right;">1,083</td>
+</tr>
+<tr>
+<td><strong>Infilteration</strong></td>
+<td>Bwd Pkts/s</td>
+<td style="text-align: right;"><strong>0.14</strong></td>
+<td style="text-align: right;">23.37</td>
+<td style="text-align: right;">26.46</td>
+</tr>
+<tr>
+<td>Bot</td>
+<td>Bwd Pkt Len Max</td>
+<td style="text-align: right;">−2.00</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: right;">119</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>必須寫出的四點解讀</strong>：</p>
+<ol>
+<li><strong>慢速耗盡型</strong>（Slowloris、SlowHTTPTest）以 IAT 與 TCP 旗標常數為指紋 — SlowHTTPTest 之 <code>ACK Flag Cnt</code> 恆為 0（d = −100.6），表示連線從未完成正常交握迴圈。</li>
+<li><strong>洪泛型</strong>（Hulk）以極小上行酬載＋極高流數為指紋（3 分鐘 461,912 筆）。</li>
+<li><strong>DDOS-LOIC-UDP 為唯一純 UDP 者</strong>，UDP 無連線特性使 CICFlowMeter 將整段洪泛聚合為極少數「巨流」（僅 1,730 筆流卻承載數十億位元組）—— <strong>以「流筆數」衡量 DDoS 強度會嚴重低估 UDP 洪泛</strong>。</li>
+<li><strong>Infilteration 為 14 種攻擊中鑑別度最低者</strong>（最大 |d| 僅 0.14–0.30）：其流量統計分布與 Benign 高度重疊，量化說明了為何 Infiltration 在既有文獻中普遍是偵測率最低的類別 [KPK24][RPG25]。</li>
+</ol>
+<hr />
+<h2 id="10">10. 官方工具記載與實測差異彙整</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>攻擊類型</th>
+<th>官方記載使用之工具</th>
+<th>本研究實測結果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Brute-force (FTP/SSH)</td>
+<td>Patator</td>
+<td>與實測之固定 TCP 參數指紋一致（Fwd Seg Size Min 40／32）</td>
+</tr>
+<tr>
+<td>DoS</td>
+<td>Hulk、GoldenEye、Slowloris、Slowhttptest</td>
+<td>4 種標記全數出現；SlowHTTPTest 之 Dst Port 為 <strong>21</strong> 而非慣見的 80</td>
+</tr>
+<tr>
+<td>Heartbleed</td>
+<td>Heartleech</td>
+<td>本目錄 10 個 CSV 中完全未出現（三重查證）[DLK14]</td>
+</tr>
+<tr>
+<td>Web attacks</td>
+<td>DVWA、Selenium</td>
+<td>3 種標記全數出現，固定三步驟鏈 CV = 0.110</td>
+</tr>
+<tr>
+<td>Botnet</td>
+<td>Zeus、Ares</td>
+<td>Bot 標記 286,191 筆，98.4% 集中於 Dst Port 8080</td>
+</tr>
+<tr>
+<td>DDoS</td>
+<td>LOIC、HOIC</td>
+<td>02/20 之 LOIC-UDP 被錯誤標記為 LOIC-HTTP（797 筆 Protocol=17）</td>
+</tr>
+<tr>
+<td>Infiltration</td>
+<td>Metasploit、Nmap、郵件投遞惡意程式</td>
+<td>目標埠分散於 53／443／3389／445，符合內網橫向偵察行為</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="11-c1c7">11. 結論 C1–C7</h2>
+<ul>
+<li><strong>C1</strong>　以「中斷 &gt; 5 分鐘」為門檻萃取出 30 個爆發區段（24 個筆數 ≥ 5），每一個都與官網公告攻擊時程對應，誤差 ≤ 6 分鐘（8 個為 0 分鐘），證明事件切割方法正確。</li>
+<li><strong>C2</strong>　攻擊排序之窮舉結果高度依賴粒度選擇（14／10／0 種）。研究中必須明確交代所採用的粒度，否則結果不可比較。</li>
+<li><strong>C3</strong>　唯一步驟數達 3 且重複出現的排序為「BF-Web → BF-XSS → SQL Injection」，出現 2 次、整體 CV = 0.110，判為類型一 — 本資料集中最完整、最穩定的攻擊鏈實例。</li>
+<li><strong>C4</strong>　9 個達門檻序列中 8 個為類型一，反映攻擊由排程程式驅動而非人為即時操作 [A16][RBC24]。</li>
+<li><strong>C5</strong>　唯一類型二（CV = 0.555）成因可明確追溯：02/15 兩波皆排於上午而 02/16 為上下午，證明 CV 判準對排程變化具敏感性。</li>
+<li><strong>C6</strong>　7 大攻擊類型之二步驟理論空間 49 種，觀察到 9 種，對可觀察空間（扣除 Heartbleed 13 格）覆蓋率 25.0%。</li>
+<li><strong>C7</strong>　Heartbleed 經三重查證確認不存在：Label 值域無此標記、6,887 MB 全檔關鍵字掃描匹配數為 0、Port 443/444 之攻擊流量全部歸屬 Infilteration。</li>
+</ul>
+<h3 id="111">11.1 研究限制（須逐項列出影響程度）</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>限制</th>
+<th>具體影響</th>
+<th>影響程度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>樣本數過小（k 多為 2）</td>
+<td>多數達門檻序列僅出現 2 次，樣本標準差由 2 個觀測值估計</td>
+<td>中等</td>
+</tr>
+<tr>
+<td>僅 10 個工作日</td>
+<td>每情境只執行兩日，具體序列之重複次數上限本就很低</td>
+<td>高</td>
+</tr>
+<tr>
+<td>9 個檔案無 IP 欄位</td>
+<td>無法證明不同事件是否來自同一攻擊來源；所有排序均為「時序上的先後」，<strong>不得詮釋為「同一攻擊者的連續動作」</strong></td>
+<td>高</td>
+</tr>
+<tr>
+<td>Timestamp 缺 AM/PM</td>
+<td>24 小時制時刻之標定依賴官網時程表對照；排序、間隔與 CV 不受影響</td>
+<td>低</td>
+</tr>
+<tr>
+<td>7 個檔案被截斷</td>
+<td>02/21 之 HOIC 僅至 14:33；影響時長與筆數，不影響起始時刻與排序</td>
+<td>低</td>
+</tr>
+<tr>
+<td>02/20 標記錯誤</td>
+<td>LOIC-UDP 被標記為 LOIC-HTTP；已依 Protocol 欄位辨識並更正 [LGH23]</td>
+<td>低</td>
+</tr>
+<tr>
+<td>CV 門檻的選擇</td>
+<td>Infilteration 鏈之 CV = 0.242 逼近 0.25；若門檻改為 0.20 將改判為類型二</td>
+<td>中等</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="112">11.2 誠實解讀的紅線</h3>
+<p>CSE-CIC-IDS2018 是<strong>依排程執行的實驗資料</strong>，時間規律主要來自實驗排程，不能直接等同真實駭客的行為。報告須明確區分：</p>
+<ul>
+<li><strong>「可推論為攻擊者 SOP」的部分</strong>：例如 02/20 十個攻擊 IP 同步執行 LOIC-HTTP → LOIC-UDP、固定連線參數與固定發送速率（CV &lt; 0.005）。</li>
+<li><strong>「只反映實驗設計」的部分</strong>：例如每日雙波節奏、同情境連續兩日。</li>
+</ul>
+<hr />
+<h2 id="12">12. 後續工作與下次討論議題</h2>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>工作內容</th>
+<th>預計產出</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Process Mining 演算法比較表：α-algorithm、Heuristic Miner、Inductive Miner、Fuzzy Miner 之安全領域應用文獻、資料來源與應用情境 [A16][MVM22]</td>
+<td>比較表 ＋ 文獻清單</td>
+</tr>
+<tr>
+<td>2</td>
+<td>以 ProM／PM4Py 匯入本研究之 24 筆事件日誌，實際產生流程模型並與人工推導之 SOP 比對 [RBP25]</td>
+<td>流程模型與符合度分析（fitness／precision）</td>
+</tr>
+<tr>
+<td>3</td>
+<td>模擬驗證：對僅出現 1 次之序列，複製資料集並改變時間點與間隔、保持順序不變，驗證演算法魯棒性</td>
+<td>模擬資料集與驗證結果</td>
+</tr>
+<tr>
+<td>4</td>
+<td>自原始 PCAP 以 CICFlowMeter 重新萃取，保留 Src IP／Dst IP，將攻擊鏈由【時序推論】提升為【實證】[DLM16]</td>
+<td>含 IP 之流量特徵檔</td>
+</tr>
+<tr>
+<td>5</td>
+<td>針對 Infilteration 低鑑別度，設計「目標埠多樣性」與「時窗流序列」特徵 [ZM24][CPV25]</td>
+<td>特徵設計與初步實驗</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="13">13. 簡報格式規範</h2>
+<ul>
+<li><strong>範本</strong>：必須使用長庚管院紫色範本（<code>參考資料\論文範本.pptx</code>），以 python-pptx 讀取後沿用其母片、版面配置、配色與字型；<strong>每一頁都用同一份範本</strong>，不可另建樣式。</li>
+<li><strong>版面</strong>：4:3（9144000 × 6858000 EMU）。</li>
+<li><strong>字級</strong>：本文 ≥ 16pt（最低 14pt）；頁尾註腳 <strong>6pt</strong>；封底參考文獻可用 10pt。</li>
+<li><strong>註腳</strong>：每一頁底部列出該頁引用文獻之完整條目與 URL，置於範本頁尾區之上，不可與頁碼重疊。</li>
+<li><strong>內文引用</strong>：以引用鍵標示（如「Inductive Miner 可保證 fitness = 1 [LFV13]」）；<strong>每頁至少 1 筆引用</strong>；純數據頁可引 [C18] 並註明「本研究實測」。</li>
+<li><strong>每頁內容</strong>：一個重點 ＋ 一張圖或一張表；文字 ≤ 6 行；數字使用千分位。</li>
+<li><strong>封面</strong>：中英文題目、副標、Keywords、研究生／指導老師、系所、日期。</li>
+<li><strong>大綱頁</strong>：章節 × 內容 × 對應頁次三欄表。</li>
+<li><strong>頁數</strong>：約 52 頁。</li>
+</ul>
+<h3 id="131">13.1 建議章節配置</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>節次</th>
+<th>內容</th>
+<th>概估頁數</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2.1</td>
+<td>前次會議回顧與追蹤項目辦理情形</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2.2</td>
+<td>研究目的、三個研究問題、分析標的、流程與關鍵參數、三層架構、資料品質前提</td>
+<td>7</td>
+</tr>
+<tr>
+<td>2.3</td>
+<td>攻擊類型盤點與 Heartbleed 查證</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2.4</td>
+<td>攻擊事件清單、時間軸、原始資料佐證、官網交叉驗證</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2.5</td>
+<td>攻擊排序之完整窮舉（三層＋跨日）、理論空間與覆蓋率、SOP</td>
+<td>5</td>
+</tr>
+<tr>
+<td>2.6</td>
+<td>模式類型之定義與判定、9 個達門檻序列、每日雙波節奏</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2.7</td>
+<td>重複出現次數彙整</td>
+<td>2</td>
+</tr>
+<tr>
+<td>2.8</td>
+<td>研究問題之回答、結論 C1–C7、研究限制、後續建議</td>
+<td>4</td>
+</tr>
+<tr>
+<td>2.9</td>
+<td>逐分鐘流量直方圖與三尺度量化證據</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2.10</td>
+<td>全域序列與 59 種 n-gram 完整清單</td>
+<td>4</td>
+</tr>
+<tr>
+<td>2.11</td>
+<td>各攻擊之關鍵欄位統計對照</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2.12</td>
+<td>官方公告攻擊時程表與工具差異彙整</td>
+<td>3</td>
+</tr>
+<tr>
+<td>—</td>
+<td>後續工作與下次討論議題</td>
+<td>1</td>
+</tr>
+<tr>
+<td>—</td>
+<td>參考文獻</td>
+<td>3</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="14">14. 圖表風格</h2>
+<ul>
+<li><strong>不要有 AI 生成感</strong>：只用 matplotlib／PM4Py／Graphviz 由實際資料繪製；<strong>禁止</strong> AI 繪圖、插畫、3D 效果、漸層背景、光暈、裝飾性圖示。</li>
+<li><strong>紫色系配色</strong>：主色 <code>#4B2E83</code>；輔助色依序 <code>#6A4C9C</code>、<code>#8E7CC3</code>、<code>#B4A7D6</code>、<code>#D9D2E9</code>；強調色（僅用於類型二或警示）<code>#C2185B</code>；灰 <code>#595959</code>。</li>
+<li><strong>圖面</strong>：白底、細格線或不加格線、標籤直接標在資料旁；中文字型用 Microsoft JhengHei。</li>
+<li><strong>解析度</strong>：簡報用圖 200 dpi；Word 用圖 300 dpi。</li>
+<li><strong>程式碼保留</strong>：所有繪圖之 Python 程式碼放在附錄。</li>
+</ul>
+<hr />
+<h2 id="15">15. 參考文獻規範</h2>
+<h3 id="151">15.1 引用鍵格式</h3>
+<ul>
+<li>由所有作者姓氏的第一個字母，接上年份的後 2 碼組成；作者三位以上取前三位。</li>
+<li>同鍵依序加 a、b、c（如 <code>[AB23a]</code>、<code>[AB23b]</code>）。</li>
+<li>機構作者取縮寫（Canadian Institute for Cybersecurity → <code>[C18]</code>）。</li>
+<li>採 APA 7 格式，依引用鍵字母順序排列，每筆都要附 DOI 或 URL。</li>
+<li><strong>每一筆文獻都必須先以 WebSearch／WebFetch 查證</strong>作者、年份、題名、期刊或會議、卷期頁、DOI；查不到的不可使用，<strong>嚴禁捏造</strong>。</li>
+</ul>
+<h3 id="152-18">15.2 本次簡報之 18 筆文獻清單</h3>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>鍵</th>
+<th>文獻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>[SLG18]</td>
+<td>Sharafaldin, I., Habibi Lashkari, A., &amp; Ghorbani, A. A. (2018). Toward generating a new intrusion detection dataset and intrusion traffic characterization. <em>ICISSP 2018</em>, 108–116. https://doi.org/10.5220/0006639801080116</td>
+</tr>
+<tr>
+<td>[C18]</td>
+<td>Canadian Institute for Cybersecurity. (2018). <em>A realistic cyber defense dataset (CSE-CIC-IDS2018)</em>. University of New Brunswick. https://www.unb.ca/cic/datasets/ids-2018.html</td>
+</tr>
+<tr>
+<td>[DLM16]</td>
+<td>Draper-Gil, G., Lashkari, A. H., Mamun, M. S. I., &amp; Ghorbani, A. A. (2016). Characterization of encrypted and VPN traffic using time-related features. <em>ICISSP 2016</em>, 407–414. https://doi.org/10.5220/0005740704070414</td>
+</tr>
+<tr>
+<td>[A16]</td>
+<td>van der Aalst, W. M. P. (2016). <em>Process mining: Data science in action</em> (2nd ed.). Springer. https://doi.org/10.1007/978-3-662-49851-4</td>
+</tr>
+<tr>
+<td>[MVM22]</td>
+<td>Macak, M., Vanat, I., Merjavy, M., Jevocin, T., &amp; Buhnova, B. (2022). Process mining usage in cybersecurity and software reliability analysis: A systematic literature review. <em>Array, 13</em>, Article 100120. https://doi.org/10.1016/j.array.2021.100120</td>
+</tr>
+<tr>
+<td>[ABM18]</td>
+<td>de Alvarenga, S. C., Barbon, S., Jr., Miani, R. S., Cukier, M., &amp; Zarpelão, B. B. (2018). Process mining and hierarchical clustering to help intrusion alert visualization. <em>Computers &amp; Security, 73</em>, 474–491. https://doi.org/10.1016/j.cose.2017.11.021</td>
+</tr>
+<tr>
+<td>[RBC24]</td>
+<td>Rodríguez, M., Betarte, G., &amp; Calegari, D. (2024). A process mining-based method for attacker profiling using the MITRE ATT&amp;CK taxonomy. <em>Journal of Internet Services and Applications, 15</em>(1), 212–232. https://doi.org/10.5753/jisa.2024.3902</td>
+</tr>
+<tr>
+<td>[RBP25]</td>
+<td>Romeo, F., Blefari, F., Pironti, F. A., &amp; Furfaro, A. (2025). Unveiling attack patterns from CTF network logs with process mining techniques. <em>ITASEC &amp; SERICS 2025</em>, CEUR-WS 3962. https://ceur-ws.org/Vol-3962/paper62.pdf</td>
+</tr>
+<tr>
+<td>[LGH23]</td>
+<td>Lanvin, M., Gimenez, P.-F., Han, Y., Majorczyk, F., Mé, L., &amp; Totel, É. (2023). Errors in the CICIDS2017 dataset and the significant differences in detection performances it makes. <em>CRiSIS 2022, LNCS 13857</em>, 18–33. https://doi.org/10.1007/978-3-031-31108-6_2</td>
+</tr>
+<tr>
+<td>[WSA13]</td>
+<td>Wressnegger, C., Schwenk, G., Arp, D., &amp; Rieck, K. (2013). A close look on n-grams in intrusion detection: Anomaly detection vs. classification. <em>AISec '13</em>, 67–76. https://doi.org/10.1145/2517312.2517316</td>
+</tr>
+<tr>
+<td>[DLK14]</td>
+<td>Durumeric, Z., Li, F., Kasten, J., et al. (2014). The matter of Heartbleed. <em>IMC '14</em>, 475–488. https://doi.org/10.1145/2663716.2663755</td>
+</tr>
+<tr>
+<td>[C88]</td>
+<td>Cohen, J. (1988). <em>Statistical power analysis for the behavioral sciences</em> (2nd ed.). Lawrence Erlbaum Associates.</td>
+</tr>
+<tr>
+<td>[ZM24]</td>
+<td>Zoubir, A., &amp; Missaoui, B. (2024). <em>Integrating graph neural networks with scattering transform for anomaly detection</em> (arXiv:2404.10800). https://doi.org/10.48550/arXiv.2404.10800</td>
+</tr>
+<tr>
+<td>[FCY22]</td>
+<td>Feng, Y., Cai, W., Yue, H., et al. (2022). An improved X-means and isolation forest based methodology for network traffic anomaly detection. <em>PLOS ONE, 17</em>(1), e0263423. https://doi.org/10.1371/journal.pone.0263423</td>
+</tr>
+<tr>
+<td>[KPK24]</td>
+<td>Kumari, S., Prabha, C., Karim, A., Hassan, M. M., &amp; Azam, S. (2024). A comprehensive investigation of anomaly detection methods in deep learning and machine learning: 2019–2023. <em>IET Information Security, 2024</em>, Article 8821891. https://doi.org/10.1049/2024/8821891</td>
+</tr>
+<tr>
+<td>[RPG25]</td>
+<td>Roponena, E., Polaka, I., &amp; Grabis, J. (2025). Anomaly detection in NetFlow traffic: Workflow for dataset preparation and analysis. <em>Frontiers in Computer Science, 7</em>, Article 1676362. https://doi.org/10.3389/fcomp.2025.1676362</td>
+</tr>
+<tr>
+<td>[CPV25]</td>
+<td>Cao, C., Panichella, A., Verwer, S., Blaise, A., &amp; Rebecchi, F. (2025). <em>ENCODE: Encoding NetFlows for network anomaly detection</em> (arXiv:2207.03890). https://doi.org/10.48550/arXiv.2207.03890</td>
+</tr>
+<tr>
+<td>[SAM20]</td>
+<td>Strom, B. E., Applebaum, A., Miller, D. P., Nickels, K. C., Pennington, A. G., &amp; Thomas, C. B. (2020). <em>MITRE ATT&amp;CK: Design and philosophy</em> (MP180360R1). The MITRE Corporation. https://attack.mitre.org/docs/ATTACK_Design_and_Philosophy_March_2020.pdf</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="16">16. 數據驗證（新增數據一律須通過）</h2>
+<h3 id="161">16.1 正確性（算得對不對）</h3>
+<ol>
+<li><strong>總和核對</strong>：各 Label 列數加總 = 16,232,943（不含 59 列重複表頭）；各事件流量加總 = 2,748,228；長度 L 的序列恰有 L−n+1 個 n-gram。</li>
+<li><strong>雙重計算</strong>：關鍵數字用兩種獨立方法各算一次，結果必須一致 —
+   - pandas 分組統計 vs. 逐列掃描
+   - 自寫 n-gram 計數 vs. <code>collections.Counter</code>／<code>nltk.ngrams</code>
+   - 自算 CV vs. <code>scipy.stats.variation(ddof=1)</code></li>
+<li><strong>參考值比對</strong>：與 §6 各表並列比較，誤差必須為 0 或寫明原因。</li>
+<li><strong>可重現</strong>：固定隨機種子；所有數字都能由附錄程式碼重新產生。</li>
+</ol>
+<h3 id="162">16.2 合理性（數字說得通嗎）</h3>
+<ol>
+<li><strong>範圍檢查</strong>：比例 ∈ [0,1]；CV ≥ 0；時間落在 08:00–20:00；持續時間 &gt; 0；速率 &gt; 0。</li>
+<li><strong>與官網一致</strong>：事件日期與攻擊名稱與官網時程表相符；起點誤差 &gt; 10 分鐘者須標示並說明。</li>
+<li><strong>與領域知識一致</strong>：SSH-BF → Port 22、FTP-BF → Port 21、LOIC-UDP → Protocol 17、DoS/DDoS 每秒流量明顯高於同日 Benign。</li>
+<li><strong>異常值標示</strong>：超過中位數 ± 3×IQR 者列出，並判斷是資料問題還是真實現象。</li>
+<li><strong>小樣本提醒</strong>：樣本數 &lt; 30 的統計（SQL Injection 僅 87 列、多數模式僅 2 次）須加註「樣本少，僅供參考」並附信賴區間。</li>
+</ol>
+<h3 id="163">16.3 產出</h3>
+<p><code>數據驗證核對表.xlsx</code>，每一列為一個數字：</p>
+<div class="tablewrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>數值</th>
+<th>計算方法 A</th>
+<th>計算方法 B</th>
+<th>參考值</th>
+<th>差異</th>
+<th>範圍檢查</th>
+<th>合理性說明</th>
+<th>結論（✔／⚠／✖）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>任何 ✖ 的數字都不得出現在簡報或報告正文。</strong></p>
+<hr />
+<h2 id="17">17. 執行流程與驗收</h2>
+<ol>
+<li><strong>先確認</strong>：開始前列出你對需求的理解與不清楚之處，向使用者確認後才執行。</li>
+<li><strong>資料分析</strong>：以 Python 逐檔讀取 <code>sorted\</code>；02/20 分段讀取以控制記憶體。</li>
+<li><strong>核對數字</strong>：將 §6 的參考值與實算結果並列。有差異時列出原因，<strong>不可硬改數字去配合參考值</strong>。</li>
+<li><strong>查證文獻</strong>：逐筆查證，並列出查證結果。</li>
+<li><strong>產出檔案</strong>：先完成數據與圖表，再組裝簡報。</li>
+<li><strong>自我檢查清單</strong>：
+   - [ ] 每頁都有註腳文獻與 URL
+   - [ ] 字級符合規定（本文 ≥ 16pt、註腳 6pt）
+   - [ ] 所有圖表皆為紫色系，無文字重疊
+   - [ ] 引用鍵與參考文獻清單一一對應
+   - [ ] 三層窮舉 14／10／0 與跨日 59／35 皆完整列出（含僅出現 1 次者）
+   - [ ] 9 個達門檻序列皆有 CV 與類型判定
+   - [ ] 前次會議 6 項追蹤皆有辦理情形
+   - [ ] 三項資料品質前提（截斷／12 小時制／標記錯誤）已揭露
+   - [ ] Heartbleed 三重查證已說明
+   - [ ] 「攻擊者 SOP」與「實驗排程」之區分已明確寫出
+   - [ ] 核對表中沒有 ✖ 的數字出現在正文</li>
+<li><strong>交付</strong>：簡報 ＋ 數據驗證核對表（＋ 選用之完整報告）。</li>
+</ol>
+<hr />
+<p><em>本提示詞依據第四次論文討論會簡報（52 頁版）與既有研究紀錄彙整而成。</em></p></main>
+</div>
+
+<footer>CSE-CIC-IDS2018 研究 · 第四次論文討論會提示詞 · 長庚大學管理學院資訊管理學系 EMBA</footer>
+<button class="themebtn" id="tbtn" type="button">☾ 深色</button>
+<script>
+(function(){
+  var b=document.getElementById('tbtn');
+  function cur(){var t=document.documentElement.getAttribute('data-theme');
+    if(t)return t;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  function paint(){b.textContent=(cur()==='dark'?'☀ 淺色':'☾ 深色');}
+  try{var s=localStorage.getItem('ids2018-prompt-theme'); if(s)document.documentElement.setAttribute('data-theme',s);}catch(e){}
+  paint();
+  b.addEventListener('click',function(){
+    var n=cur()==='dark'?'light':'dark';
+    document.documentElement.setAttribute('data-theme',n);
+    try{localStorage.setItem('ids2018-prompt-theme',n);}catch(e){}
+    paint();
+  });
+})();
+</script>
+</body>
+</html>
